@@ -22,12 +22,25 @@
 
     <include layout="@layout/content_main" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+    <Button
+        android:id="@+id/btnStart"
+        android:layout_width="192dp"
+        android:layout_height="150dp"
+        android:text="Start" />
+
+    <Button
+        android:id="@+id/btnStop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:text="Stop" />
+
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:id="@+id/fab"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="bottom|end"-->
+        <!--android:layout_margin="@dimen/fab_margin"-->
+        <!--app:srcCompat="@android:drawable/ic_dialog_email" />-->
 
 </android.support.design.widget.CoordinatorLayout>
