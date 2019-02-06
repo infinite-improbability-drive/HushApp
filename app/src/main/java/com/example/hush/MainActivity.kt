@@ -1,5 +1,6 @@
 package com.example.hush
 
+import android.Manifest
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
@@ -12,20 +13,27 @@ import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
 import android.app.Activity
+import android.content.pm.PackageManager
 import android.media.AudioFormat
 import android.media.AudioRecord
 import android.media.MediaRecorder
+import android.os.Build
+import android.support.annotation.NonNull
+import android.support.annotation.RequiresApi
+import android.support.v4.content.ContextCompat
 import android.view.KeyEvent
 import android.widget.Button
 import android.util.Log
+import android.widget.Toast
 import kotlin.experimental.and
-
+private const val RECORD_AUDIO_REQUEST_CODE =123
 /**
  *
  * @author RAHUL BARADIA
  */
 
 class MainActivity : AppCompatActivity() {
+
     private var recorder: AudioRecord? = null
     private var recordingThread: Thread? = null
     private var isRecording = false
@@ -49,6 +57,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getPermissionToRecordAudio()
+        }
+
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -80,6 +93,50 @@ class MainActivity : AppCompatActivity() {
     private fun enableButtons(isRecording: Boolean) {
         enableButton(R.id.btnStart, !isRecording)
         enableButton(R.id.btnStop, isRecording)
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    fun getPermissionToRecordAudio() {
+        // 1) Use the support library version ContextCompat.checkSelfPermission(...) to avoid
+        // checking the build version since Context.checkSelfPermission(...) is only available
+        // in Marshmallow
+        // 2) Always check for permission (even if permission has already been granted)
+        // since the user can revoke permissions at any time through Settings
+        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) !== PackageManager.PERMISSION_GRANTED
+                        || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED
+                        || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED))
+        {
+            // The permission is NOT already granted.
+            // Check if the user has been asked about this permission already and denied
+            // it. If so, we want to give more explanation about why the permission is needed.
+            // Fire off an async request to actually get the permission
+            // This will show the standard permission request dialog UI
+            requestPermissions(arrayOf<String>(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    RECORD_AUDIO_REQUEST_CODE)
+        }
+    }
+    // Callback with the request from calling requestPermissions(...)
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    override fun onRequestPermissionsResult(requestCode:Int,
+                                            @NonNull permissions:Array<String>,
+                                            @NonNull grantResults:IntArray) {
+        // Make sure it's our original READ_CONTACTS request
+        if (requestCode == RECORD_AUDIO_REQUEST_CODE)
+        {
+            if ((grantResults.size == 3 &&
+                            grantResults[0] == PackageManager.PERMISSION_GRANTED
+                            && grantResults[1] == PackageManager.PERMISSION_GRANTED
+                            && grantResults[2] == PackageManager.PERMISSION_GRANTED))
+            {
+                //Toast.makeText(this, "Record Audio permission granted", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                Toast.makeText(this, "You must give permissions to use this app. App is exiting.", Toast.LENGTH_SHORT).show()
+                finishAffinity()
+            }
+        }
     }
 
     private fun startRecording() {
@@ -117,6 +174,7 @@ class MainActivity : AppCompatActivity() {
         try {
             os = FileOutputStream(filePath)
         } catch (e: FileNotFoundException) {
+            println("File path not found")
             e.printStackTrace()
         }
 
@@ -124,7 +182,7 @@ class MainActivity : AppCompatActivity() {
             // gets the voice output from microphone to byte format
 
             recorder!!.read(sData, 0, BufferElements2Rec)
-            println("Short wirting to file$sData")
+            println("Short writing to file$sData")
             try {
                 // // writes the data to file from buffer
                 // // stores the voice buffer
