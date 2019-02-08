@@ -38,9 +38,6 @@ class MainActivity : AppCompatActivity() {
     private var recordingThread: Thread? = null
     private var isRecording = false
 
-    internal var BufferElements2Rec = 1024 // want to play 2048 (2K) since 2 bytes we use only 1024
-    internal var BytesPerElement = 2 // 2 bytes in 16bit format
-
     private val btnClick = View.OnClickListener { v ->
         when (v.id) {
             R.id.btnStart -> {
@@ -103,16 +100,20 @@ class MainActivity : AppCompatActivity() {
         // in Marshmallow
         // 2) Always check for permission (even if permission has already been granted)
         // since the user can revoke permissions at any time through Settings
-        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) !== PackageManager.PERMISSION_GRANTED
-                        || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED
-                        || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED))
+        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+                        !== PackageManager.PERMISSION_GRANTED
+                        || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                        !== PackageManager.PERMISSION_GRANTED
+                        || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        !== PackageManager.PERMISSION_GRANTED))
         {
             // The permission is NOT already granted.
             // Check if the user has been asked about this permission already and denied
             // it. If so, we want to give more explanation about why the permission is needed.
             // Fire off an async request to actually get the permission
             // This will show the standard permission request dialog UI
-            requestPermissions(arrayOf<String>(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE),
+            requestPermissions(arrayOf<String>(Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE),
                     RECORD_AUDIO_REQUEST_CODE)
         }
     }
@@ -124,26 +125,28 @@ class MainActivity : AppCompatActivity() {
         // Make sure it's our original READ_CONTACTS request
         if (requestCode == RECORD_AUDIO_REQUEST_CODE)
         {
-            if ((grantResults.size == 3 &&
-                            grantResults[0] == PackageManager.PERMISSION_GRANTED
-                            && grantResults[1] == PackageManager.PERMISSION_GRANTED
-                            && grantResults[2] == PackageManager.PERMISSION_GRANTED))
-            {
+            if ((grantResults.size == THREE && grantResultsCorrect(grantResults)))
                 //Toast.makeText(this, "Record Audio permission granted", Toast.LENGTH_SHORT).show();
-            }
             else
             {
-                Toast.makeText(this, "You must give permissions to use this app. App is exiting.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "You must give permissions to use this app. App is exiting.",
+                        Toast.LENGTH_SHORT).show()
                 finishAffinity()
             }
         }
+    }
+
+    private fun grantResultsCorrect(grantResults: IntArray): Boolean {
+      return grantResults[0] == PackageManager.PERMISSION_GRANTED
+              && grantResults[1] == PackageManager.PERMISSION_GRANTED
+              && grantResults[2] == PackageManager.PERMISSION_GRANTED
     }
 
     private fun startRecording() {
 
         recorder = AudioRecord(MediaRecorder.AudioSource.MIC,
                 RECORDER_SAMPLERATE, RECORDER_CHANNELS,
-                RECORDER_AUDIO_ENCODING, BufferElements2Rec * BytesPerElement)
+                RECORDER_AUDIO_ENCODING, BUFFER_ELEMENTS_TO_REC * bytesPerElement)
 
         recorder!!.startRecording()
         isRecording = true
@@ -157,7 +160,7 @@ class MainActivity : AppCompatActivity() {
         val bytes = ByteArray(shortArrsize * 2)
         for (i in 0 until shortArrsize) {
             bytes[i * 2] = (sData[i] and 0x00FF).toByte()
-            bytes[i * 2 + 1] = (sData[i] and  8).toByte()
+            bytes[i * 2 + 1] = (sData[i] and 8).toByte()
             sData[i] = 0
         }
         return bytes
@@ -168,7 +171,7 @@ class MainActivity : AppCompatActivity() {
         // Write the output audio in byte
 
         val filePath = "/sdcard/voice8K16bitmono.pcm"
-        val sData = ShortArray(BufferElements2Rec)
+        val sData = ShortArray(BUFFER_ELEMENTS_TO_REC)
 
         var os: FileOutputStream? = null
         try {
@@ -181,13 +184,13 @@ class MainActivity : AppCompatActivity() {
         while (isRecording) {
             // gets the voice output from microphone to byte format
 
-            recorder!!.read(sData, 0, BufferElements2Rec)
+            recorder!!.read(sData, 0, BUFFER_ELEMENTS_TO_REC)
             println("Short writing to file$sData")
             try {
                 // // writes the data to file from buffer
                 // // stores the voice buffer
                 val bData = short2byte(sData)
-                os!!.write(bData, 0, BufferElements2Rec * BytesPerElement)
+                os!!.write(bData, 0, BUFFER_ELEMENTS_TO_REC * bytesPerElement)
             } catch (e: IOException) {
                 e.printStackTrace()
             }
@@ -243,6 +246,9 @@ class MainActivity : AppCompatActivity() {
         private val RECORDER_SAMPLERATE = 8000
         private val RECORDER_CHANNELS = AudioFormat.CHANNEL_IN_MONO
         private val RECORDER_AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT
+        internal var BUFFER_ELEMENTS_TO_REC = 1024 // want to play 2048 (2K) since 2 bytes we use only 1024
+        internal var bytesPerElement = 2 // 2 bytes in 16bit format
+        private val THREE = 3
     }
 }
 
