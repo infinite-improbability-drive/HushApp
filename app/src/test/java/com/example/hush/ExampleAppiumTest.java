@@ -16,9 +16,10 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import static org.openqa.selenium.By.id;
 
 
-    public class ExampleAppiumTest {
+public class ExampleAppiumTest {
 
         WebDriver driver;
 
@@ -49,6 +50,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
             // Set your application's appPackage if you are using any other app.
             capabilities.setCapability("appActivity", "com.example.hush.MainActivity");
 
+            // Automatically grant app permissions
+            capabilities.setCapability("autoGrantPermissions", "true");
+
             // Created object of RemoteWebDriver will all set capabilities.
             // Set appium server address and port number in URL string.
             // It will launch calculator app in android device.
@@ -58,17 +62,27 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
         }
 
-//        @Test
-//        public void testFirstCalculator() {
-//
-//            // Click on DELETE/CLR button to clear result text box before running test.
-//            driver.findElements(By.xpath("//android.widget.Button")).get(0).click();
-//
-//            // Click on number 2 button.
-//            driver.findElement(By.name("7")).click();
-//
-//            driver.manage().timeouts().implicitlyWait(30,TimeUnit.SECONDS);
-//        }
+        @Test
+        public void testApp() {
+
+            // Click on DELETE/CLR button to clear result text box before running test.
+           //  driver.findElements(By.xpath("//android.widget.Button")).get(0).click();
+
+            // Click on HushApp
+            driver.findElements(By.xpath("//android.widget.Button")).get(0).click();
+
+            // driver.findElements(By.xpath("//android.widget.Button")).get(0).click();
+            // driver.findElement(By.id("android:id/button1")).click();
+            // driver.findElement(By.id("com.android.packageinstaller:id/permission_allow_button")).click();
+            // driver.findElement(By.id("btnStart")).click();
+
+            // driver.findElement(By.id("com.example.hush:id/btnStart")).click();
+            // driver.findElements(By.xpath("//android.widget.Button")).get(0).click();
+            // driver.findElement(By.className("Button")).click();
+
+
+            // driver.manage().timeouts().implicitlyWait(30,TimeUnit.SECONDS);
+        }
 
         @After
         public void End() {

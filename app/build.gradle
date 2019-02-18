@@ -35,13 +35,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     testImplementation 'org.robolectric:robolectric:4.1'
-    implementation files('src/libs/byte-buddy-1.8.15.jar')
-    implementation files('src/libs/commons-exec-1.3.jar')
-    implementation files('src/libs/guava-25.0-jre.jar')
-    implementation files('src/libs/java-client-7.0.0.jar')
-    implementation files('src/libs/okhttp-3.11.0.jar')
-    implementation files('src/libs/okio-1.14.0.jar')
-    implementation files('src/libs/client-combined-3.141.59.jar')
+    testImplementation 'io.appium:java-client:4.1.2'
+
 }
 repositories {
     mavenCentral()
