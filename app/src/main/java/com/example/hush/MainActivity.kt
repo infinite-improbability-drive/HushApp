@@ -9,15 +9,15 @@ import android.support.v7.widget.Toolbar
 import android.view.View
 import android.view.Menu
 import android.view.MenuItem
-import java.io.FileNotFoundException
-import java.io.FileOutputStream
-import java.io.IOException
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.media.AudioFormat
 import android.media.AudioRecord
+import android.media.MediaPlayer
 import android.media.MediaRecorder
+import android.net.Uri
 import android.os.Build
+import android.os.Environment
 import android.support.annotation.NonNull
 import android.support.annotation.RequiresApi
 import android.support.v4.content.ContextCompat
@@ -25,6 +25,7 @@ import android.view.KeyEvent
 import android.widget.Button
 import android.util.Log
 import android.widget.Toast
+import java.io.*
 import kotlin.experimental.and
 private const val RECORD_AUDIO_REQUEST_CODE =123
 /**
@@ -34,9 +35,11 @@ private const val RECORD_AUDIO_REQUEST_CODE =123
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var mp: MediaPlayer
     private var recorder: AudioRecord? = null
     private var recordingThread: Thread? = null
     private var isRecording = false
+    val sData = ShortArray(BUFFER_ELEMENTS_TO_REC)
 
     private val btnClick = View.OnClickListener { v ->
         when (v.id) {
@@ -48,6 +51,10 @@ class MainActivity : AppCompatActivity() {
                 enableButtons(false)
                 stopRecording()
             }
+            R.id.btnPlay -> {
+              Log.d("debug", "here2")
+              audioPlayer("/sdcard/voice8K16bitmono.pcm")
+          }
         }
     }
 
@@ -81,6 +88,7 @@ class MainActivity : AppCompatActivity() {
     private fun setButtonHandlers() {
         findViewById<View>(R.id.btnStart).setOnClickListener(btnClick)
         findViewById<View>(R.id.btnStop).setOnClickListener(btnClick)
+        findViewById<View>(R.id.btnPlay).setOnClickListener(btnClick)
     }
 
     private fun enableButton(id: Int, isEnable: Boolean) {
@@ -171,7 +179,7 @@ class MainActivity : AppCompatActivity() {
         // Write the output audio in byte
 
         val filePath = "/sdcard/voice8K16bitmono.pcm"
-        val sData = ShortArray(BUFFER_ELEMENTS_TO_REC)
+
 
         var os: FileOutputStream? = null
         try {
@@ -203,6 +211,26 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+     private fun audioPlayer(path: String){
+     //set up MediaPlayer
+
+       val filePath = Environment.getExternalStorageDirectory().toString() + "/sdcard/voice8K16bitmono.pcm"
+       Log.d("SetDatasource path", filePath)
+       val filePath1 = File(filePath)
+       filePath1.createNewFile();
+       val thing = FileInputStream(filePath1)
+       mp = MediaPlayer()
+        try {
+            mp.setDataSource(thing.fd)
+            print(filePath)
+            mp.prepare()
+            mp.start()
+              }
+        catch (e: Exception) {
+            e.printStackTrace()
+             }
+            }
 
     private fun stopRecording() {
         // stops the recording activity
