@@ -82,6 +82,10 @@ public class ExampleAppiumTest {
 
 
             // driver.manage().timeouts().implicitlyWait(30,TimeUnit.SECONDS);
+
+            // to test that context is not null
+            //Assert.assertNotNUll(driver.getapp());
+
         }
 
         @After
