@@ -14,15 +14,18 @@ jobs:
     # documented at https://circleci.com/docs/2.0/circleci-images/
     # - image: circleci/postgres:9.4
 
-    working_directory: ~/HushApp
-
-    environment:
-      # Customize the JVM maximum heap limit
-      JVM_OPTS: -Xmx3200m
-      TERM: dumb
+#    working_directory: ~/HushApp
+#
+#    environment:
+#      # Customize the JVM maximum heap limit
+#      JVM_OPTS: -Xmx3200m
+##      TERM: dumb
 
     steps:
-    - checkout
+#    - checkout
+      - run:
+          command:
+            echo 'Hello World!'
 
 #    # Download and cache dependencies
 #    - restore_cache:
@@ -31,14 +34,12 @@ jobs:
 #        # fallback to using the latest cache if no exact match is found
 #        - v1-dependencies-
 
-    - run:
-        name: Download Dependencies
-        command: ./gradlew androidDependencies
+#    - run: gradle dependencies
 
-    - save_cache:
-        paths:
-        - ~/.gradle
-        key: v1-dependencies-{{ checksum "build.gradle" }}
+#    - save_cache:
+#        paths:
+#        - ~/.gradle
+#        key: v1-dependencies-{{ checksum "build.gradle" }}
 
     # run tests!
-    - run: gradle test
+#    - run: gradle test
