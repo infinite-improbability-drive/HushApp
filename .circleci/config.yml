@@ -6,7 +6,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/android:api-25-alpha
+    - image: circleci/<language>:<version TAG>
     # specify the version you desire here
 
     # Specify service dependencies here if necessary
