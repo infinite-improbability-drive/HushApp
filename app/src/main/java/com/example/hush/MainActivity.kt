@@ -41,8 +41,6 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
         button2 = findViewById(R.id.btnStop) as Button
         button3 = findViewById(R.id.btnPlay) as Button
 
-
-
         button1.setOnClickListener {
             recorder = MediaRecorder()
             recorder.setAudioSource(MediaRecorder.AudioSource.MIC)
@@ -96,14 +94,12 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
         }
     }
 
-
     override fun onCompletion(mp: MediaPlayer) {
         button1.setEnabled(true)
         button2.setEnabled(true)
         button3.setEnabled(true)
         tv1.setText("Ready")
     }
-
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     fun getPermissionToRecordAudio() {
