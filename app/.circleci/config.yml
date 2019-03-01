@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
     # specify the version you desire here
-    - image: circleci/android:api-25-alpha
+    - image: circleci/ruby:2.4.1
 
     # Specify service dependencies here if necessary
     # CircleCI maintains a library of pre-built images
@@ -22,10 +22,8 @@ jobs:
 ##      TERM: dumb
 
     steps:
-#    - checkout
-      - run:
-          command:
-            echo 'Hello World!'
+      - checkout
+      - run: echo 'Hello World!'
 
 #    # Download and cache dependencies
 #    - restore_cache:
