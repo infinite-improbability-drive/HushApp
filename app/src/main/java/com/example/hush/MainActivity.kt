@@ -20,6 +20,20 @@ import java.io.IOException
 
 private const val RECORD_AUDIO_REQUEST_CODE =123
 class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
+
+    companion object {
+        lateinit var instance: MainActivity
+
+        val managerInstance: MainActivity
+            get() {
+                if (instance == null) {
+                    instance = MainActivity ()
+                }
+
+                return instance
+            }
+    }
+
     lateinit var recorder: MediaRecorder
     lateinit var player: MediaPlayer
     lateinit var file: File
@@ -28,7 +42,11 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
     lateinit var button3: Button
     lateinit var tv1: TextView
     // coding180.com
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        // call the super class onCreate to complete the creation of activity like
+        // the view hierarchy
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
