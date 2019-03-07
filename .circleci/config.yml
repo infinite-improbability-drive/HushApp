@@ -33,6 +33,8 @@ jobs:
 #        - v1-dependencies-
 #
       - run: ./gradlew dependencies
+      - run: ./gradlew detektGenerateConfig
+      - run: ./gradlew detektCheck
 #
 #    - save_cache:
 #        paths:
