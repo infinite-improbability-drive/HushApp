@@ -1,6 +1,4 @@
 package com.example.hush
-import com.example.hush.Recorder
-
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -21,7 +19,7 @@ import android.widget.Toast
 import java.io.IOException
 
 private const val RECORD_AUDIO_REQUEST_CODE =123
-class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
+class Recorder : AppCompatActivity(), MediaPlayer.OnCompletionListener {
     lateinit var recorder: MediaRecorder
     lateinit var player: MediaPlayer
     lateinit var file: File
