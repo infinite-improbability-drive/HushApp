@@ -37,7 +37,6 @@ jobs:
       - run: ./gradlew detektCheck
       - run: ./gradlew test
 
-
 #
 #    - save_cache:
 #        paths:
