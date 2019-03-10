@@ -162,7 +162,7 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
         // Make sure it's our original READ_CONTACTS request
         if (requestCode == RECORD_AUDIO_REQUEST_CODE) {
             if ((grantResults.size == 3 && grantResultsCorrect(grantResults)))
-            //Toast.makeText(this, "Record Audio permission granted", Toast.LENGTH_SHORT).show();
+
             else {
                 Toast.makeText(
                         this, "You must give permissions to use this app. App is exiting.",
