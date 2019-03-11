@@ -20,9 +20,11 @@ import java.io.IOException
 
 private const val RECORD_AUDIO_REQUEST_CODE =123
 class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
-    lateinit var recorder: MediaRecorder
+
+    lateinit var recorder: Recorder
+    // lateinit var recorder: MediaRecorder
     lateinit var player: MediaPlayer
-    lateinit var file: File
+    // lateinit var file: File
     lateinit var button1: Button
     lateinit var button2: Button
     lateinit var button3: Button
@@ -41,38 +43,39 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
         button2 = findViewById(R.id.btnStop) as Button
         button3 = findViewById(R.id.btnPlay) as Button
 
-
-
         button1.setOnClickListener {
-            recorder = MediaRecorder()
-            recorder.setAudioSource(MediaRecorder.AudioSource.MIC)
-            recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
-            val path = File(Environment.getExternalStorageDirectory().getPath())
-            try {
-                file = File.createTempFile("temporary", ".3gp", path)
-            } catch (e: IOException) {
-            }
-
-            recorder.setOutputFile(file.absolutePath)
-            try {
-                recorder.prepare()
-            } catch (e: IOException) {
-            }
-
-            recorder.start()
+            recorder = Recorder()
+            recorder.setup()
+            recorder.record()
             tv1.text = "Recording"
             button1.setEnabled(false)
             button2.setEnabled(true)
         }
 
+//            recorder = MediaRecorder()
+//            recorder.setAudioSource(MediaRecorder.AudioSource.MIC)
+//            recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+//            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+//            val path = File(Environment.getExternalStorageDirectory().getPath())
+//            try {
+//                file = File.createTempFile("temporary", ".3gp", path)
+//            } catch (e: IOException) {
+//            }
+//
+//            recorder.setOutputFile(file.absolutePath)
+//            try {
+//                recorder.prepare()
+//            } catch (e: IOException) {
+//            }
+
+
         button2.setOnClickListener {
             recorder.stop()
-            recorder.release()
+//            recorder.release()
             player = MediaPlayer()
             player.setOnCompletionListener(this)
             try {
-                player.setDataSource(file.absolutePath)
+                player.setDataSource(recorder.file.absolutePath)
             } catch (e: IOException) {
             }
 
