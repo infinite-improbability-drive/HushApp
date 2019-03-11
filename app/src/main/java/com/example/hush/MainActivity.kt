@@ -6,30 +6,22 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.media.MediaPlayer
-import android.media.MediaRecorder
 import android.os.Build
-import android.os.Environment
 import android.support.annotation.NonNull
 import android.support.annotation.RequiresApi
-import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
-import java.io.File
 import android.widget.TextView
 import android.widget.Toast
-import java.io.IOException
 
 private const val RECORD_AUDIO_REQUEST_CODE =123
 class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
 
     lateinit var recorder: Recorder
-    // lateinit var recorder: MediaRecorder
-    lateinit var player: MediaPlayer
-    // lateinit var file: File
+    lateinit var player: Player
     lateinit var button1: Button
     lateinit var button2: Button
     lateinit var button3: Button
     lateinit var tv1: TextView
-    // coding180.com
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -52,37 +44,11 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
             button2.setEnabled(true)
         }
 
-//            recorder = MediaRecorder()
-//            recorder.setAudioSource(MediaRecorder.AudioSource.MIC)
-//            recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-//            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
-//            val path = File(Environment.getExternalStorageDirectory().getPath())
-//            try {
-//                file = File.createTempFile("temporary", ".3gp", path)
-//            } catch (e: IOException) {
-//            }
-//
-//            recorder.setOutputFile(file.absolutePath)
-//            try {
-//                recorder.prepare()
-//            } catch (e: IOException) {
-//            }
-
-
         button2.setOnClickListener {
             recorder.stop()
-//            recorder.release()
-            player = MediaPlayer()
-            player.setOnCompletionListener(this)
-            try {
-                player.setDataSource(recorder.file.absolutePath)
-            } catch (e: IOException) {
-            }
-
-            try {
-                player.prepare()
-            } catch (e: IOException) {
-            }
+            player = Player()
+            player.setup(recorder.file)
+            player.player.setOnCompletionListener(this)
 
             button1.setEnabled(true)
             button2.setEnabled(false)
@@ -91,11 +57,11 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
         }
 
         button3.setOnClickListener {
-            player.start();
-            button1.setEnabled(false);
-            button2.setEnabled(false);
-            button3.setEnabled(false);
-            tv1.setText("Playing");
+            player.play()
+            button1.setEnabled(false)
+            button2.setEnabled(false)
+            button3.setEnabled(false)
+            tv1.setText("Playing")
         }
     }
 
