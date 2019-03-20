@@ -38,6 +38,21 @@ class MainActivityTest {
 
     @Test
     @Throws(Exception::class)
+    fun onCreateTest() {
+
+        val intent = Intent()
+        val bundle = Bundle()
+        intent.putExtras(bundle)
+        val controller = Robolectric.buildActivity(MainActivity::class.java, intent).create()
+        val activity = controller.get() as Activity
+
+        controller.start()
+
+        assertFalse(activity.isFinishing)
+    }
+
+    @Test
+    @Throws(Exception::class)
     fun onRequestPermissionsResultPermissionGranted() {
 
         val testRequestPermissions = arrayOf( Manifest.permission.READ_EXTERNAL_STORAGE,
