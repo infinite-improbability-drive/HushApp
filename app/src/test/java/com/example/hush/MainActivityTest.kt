@@ -40,14 +40,17 @@ class MainActivityTest {
     @Throws(Exception::class)
     fun onCreateTest() {
 
+        //Activity variables
         val intent = Intent()
         val bundle = Bundle()
         intent.putExtras(bundle)
         val controller = Robolectric.buildActivity(MainActivity::class.java, intent).create()
         val activity = controller.get() as Activity
 
+        //Start activity
         controller.start()
 
+        //Asserts
         assertFalse(activity.isFinishing)
     }
 
@@ -55,6 +58,7 @@ class MainActivityTest {
     @Throws(Exception::class)
     fun onRequestPermissionsResultPermissionGranted() {
 
+        //Method Variables
         val testRequestPermissions = arrayOf( Manifest.permission.READ_EXTERNAL_STORAGE,
                                           Manifest.permission.RECORD_AUDIO,
                                           Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -66,6 +70,7 @@ class MainActivityTest {
                 testGrantResults)
         val latestToast = ShadowToast.getTextOfLatestToast()
 
+        //Asserts
         assertNull(latestToast)
     }
 
@@ -73,12 +78,14 @@ class MainActivityTest {
     @Throws(Exception::class)
     fun onRequestPermissionsResultTwoGrantedPermissions() {
 
+        //Activity Variables
         val intent = Intent()
         val bundle = Bundle()
         intent.putExtras(bundle)
         val controller = Robolectric.buildActivity(MainActivity::class.java, intent).create()
         val activity = controller.get() as Activity
 
+        //Method Variables
         val testRequestCode = 123
         val testRequestPermissions = arrayOf( Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.RECORD_AUDIO,
@@ -89,11 +96,13 @@ class MainActivityTest {
 
         controller.start()
 
+        //Call method that is being tested.
         activity.onRequestPermissionsResult(testRequestCode, testRequestPermissions,
                 testGrantResults)
         val latestToast = ShadowToast.getTextOfLatestToast()
         val message = "You must give permissions to use this app. App is exiting."
 
+        //Asserts
         assertTrue(activity.isFinishing)
         assertNotNull(latestToast)
         assertEquals(latestToast, message)
@@ -103,12 +112,14 @@ class MainActivityTest {
     @Throws(Exception::class)
     fun onRequestPermissionsResultPermissionDenied() {
 
+        //Activity Variables
         val intent = Intent()
         val bundle = Bundle()
         intent.putExtras(bundle)
         val controller = Robolectric.buildActivity(MainActivity::class.java, intent).create()
         val activity = controller.get() as Activity
 
+        //Method Variables
         val testRequestCode = 123
         val testRequestPermissions = arrayOf( Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.RECORD_AUDIO,
@@ -120,11 +131,13 @@ class MainActivityTest {
 
         controller.start()
 
+        //Call the method that is being tested
         activity.onRequestPermissionsResult(testRequestCode, testRequestPermissions,
                 testGrantResults)
         val latestToast = ShadowToast.getTextOfLatestToast()
         val message = "You must give permissions to use this app. App is exiting."
 
+        //Asserts
         assertTrue(activity.isFinishing)
         assertNotNull(latestToast)
         assertEquals(latestToast, message)
