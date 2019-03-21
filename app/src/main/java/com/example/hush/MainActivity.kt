@@ -21,19 +21,6 @@ import java.io.IOException
 private const val RECORD_AUDIO_REQUEST_CODE =123
 class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
 
-    companion object {
-        lateinit var instance: MainActivity
-
-        val managerInstance: MainActivity
-            get() {
-                if (instance == null) {
-                    instance = MainActivity ()
-                }
-
-                return instance
-            }
-    }
-
     lateinit var recorder: MediaRecorder
     lateinit var player: MediaPlayer
     lateinit var file: File
