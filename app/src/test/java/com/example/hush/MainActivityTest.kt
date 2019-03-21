@@ -20,7 +20,10 @@ import android.app.Application
 import org.robolectric.android.controller.ActivityController
 import android.os.Bundle
 import android.content.Intent
+import android.media.MediaPlayer
+import android.support.v4.content.ContextCompat
 import org.junit.Assert.*
+import org.junit.Rule
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.Shadows
 import org.robolectric.shadow.api.Shadow
@@ -28,6 +31,8 @@ import org.robolectric.shadow.api.Shadow
 @RunWith(RobolectricTestRunner::class)
 
 class MainActivityTest {
+
+    //@get:Rule var permissionRule = GrantPermissionRule.grant(android.Manifest.permission.RECORD_AUDIO)
 
     lateinit var testMainActivity: MainActivity
 
@@ -53,6 +58,29 @@ class MainActivityTest {
         //Asserts
         assertFalse(activity.isFinishing)
     }
+
+//    @Test
+//    fun onCompletionTest() {
+//
+//        //Method Variables
+//        var mp = MediaPlayer()
+//
+//        //Activity Variables
+//        val intent = Intent()
+//        val bundle = Bundle()
+//        intent.putExtras(bundle)
+//        val controller = Robolectric.buildActivity(MainActivity::class.java, intent).create()
+//        val activity = controller.get() as Activity
+//
+//        controller.start()
+//
+//        //Call method that is being tested.
+//        testMainActivity.onCompletion(mp)
+//
+//        //Asserts
+//        assertNotNull(mp)
+//
+//    }
 
     @Test
     @Throws(Exception::class)
