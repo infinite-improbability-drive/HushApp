@@ -15,18 +15,24 @@ class Recorder {
         recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
         recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
 
+        setupFileForRecording()
+        prepareForRecording()
+    }
+
+    private fun setupFileForRecording() {
         val path = File(Environment.getExternalStorageDirectory().getPath())
         try {
             file = File.createTempFile("temporary", ".3gp", path)
         } catch (e: IOException) {
         }
-
         recorder.setOutputFile(file.absolutePath)
+    }
+
+    private fun prepareForRecording() {
         try {
-            recorder.prepare()
+        recorder.prepare()
         } catch (e: IOException) {
         }
-
     }
 
     fun record() {
