@@ -40,9 +40,8 @@ jobs:
     - run: ./gradlew dependencies
     - run: ./gradlew detektGenerateConfig
     - run: ./gradlew detektCheck
-#      - run: ./gradlew testDebug
-
-#
+      - checkout
+      - run: echo 'Hello World!'
 #    - save_cache:
 #        paths:
 #        - ~/.gradle
