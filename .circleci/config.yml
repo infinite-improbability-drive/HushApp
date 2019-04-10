@@ -25,11 +25,6 @@ jobs:
     - checkout
     - run: echo 'Hello World!'
 
-
-    # Install Android NDK
-    - run: sdkmanager --install "ndk-bundle"
-    - run: sdkmanager --licenses
-
     #    # Download and cache dependencies
     #    - restore_cache:
     #        keys:
@@ -40,8 +35,9 @@ jobs:
     - run: ./gradlew dependencies
     - run: ./gradlew detektGenerateConfig
     - run: ./gradlew detektCheck
-      - checkout
-      - run: echo 'Hello World!'
+#      - run: ./gradlew testDebug
+
+#
 #    - save_cache:
 #        paths:
 #        - ~/.gradle
