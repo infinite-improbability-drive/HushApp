@@ -23,6 +23,7 @@
             android:layout_width="429dp"
             android:layout_height="match_parent"
             android:background="?attr/colorPrimary"
+            app:title="@string/app_name"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
@@ -43,6 +44,7 @@
         android:layout_height="86dp"
         android:layout_marginStart="52dp"
         android:layout_marginBottom="316dp"
+        android:visibility="invisible"
         android:text="Start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -54,6 +56,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="316dp"
+        android:visibility="invisible"
         android:text="Stop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,15 +69,37 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="136dp"
+        android:visibility="invisible"
         android:text="Play"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnStart2"
+        android:layout_width="129dp"
+        android:layout_height="86dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginBottom="316dp"
+        android:text="Start"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnStop2"
+        android:layout_width="129dp"
+        android:layout_height="86dp"
+        android:layout_marginStart="228dp"
+        android:layout_marginBottom="316dp"
+        android:text="Stop"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tv1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="invisible"
         android:text="status"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
