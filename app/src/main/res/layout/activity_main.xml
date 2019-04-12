@@ -108,8 +108,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="44dp"
-        android:max="255"
-        android:progress="255"
         app:layout_constraintBottom_toTopOf="@+id/labelP"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -121,8 +119,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="76dp"
-        android:max="255"
-        android:progress="255"
+        android:max="360"
+        android:progress="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

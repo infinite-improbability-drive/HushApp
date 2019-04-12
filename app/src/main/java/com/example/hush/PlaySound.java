@@ -12,9 +12,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +25,7 @@ public class PlaySound {
     // originally from http://marblemice.blogspot.com/2010/04/generate-and-play-tone-in-android.html
     // and modified by Steve Pomeroy <steve@staticfree.info>
     private final int duration = 3; // seconds
-    private final int sampleRate = 8000;
+    private final int sampleRate = 6000;
     private final int numSamples = duration * sampleRate;
     private final double sample[] = new double[numSamples];
     private final double freqOfTone = 440; // hz
@@ -50,6 +52,7 @@ public class PlaySound {
             }
         });
         thread.start();
+        Log.d("bufferSizeInFrames:", Integer.toString(audioTrack.getBufferSizeInFrames()));
     }
 
     public void stop() {
@@ -76,8 +79,13 @@ public class PlaySound {
         }
     }
 
-    void playSound(){
+    public void changeFrame(int position) {
+        audioTrack.stop();
+        audioTrack.setPlaybackHeadPosition((generatedSnd.length/2) / (360 - position));
+        audioTrack.play();
+    }
 
+    void playSound(){
         audioTrack.write(generatedSnd, 0, generatedSnd.length);
         audioTrack.setLoopPoints(0, generatedSnd.length / 2, -1);
         audioTrack.play();

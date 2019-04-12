@@ -14,6 +14,7 @@ import android.support.v4.content.ContextCompat
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_main.*
 
 private const val RECORD_AUDIO_REQUEST_CODE =123
 class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
@@ -101,7 +102,7 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
 
 
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-
+                playSound.changeFrame(progress)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {
