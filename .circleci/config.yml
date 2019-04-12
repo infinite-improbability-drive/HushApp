@@ -35,9 +35,7 @@ jobs:
     - run: ./gradlew dependencies
     - run: ./gradlew detektGenerateConfig
     - run: ./gradlew detektCheck
-#      - run: ./gradlew testDebug
 
-#
 #    - save_cache:
 #        paths:
 #        - ~/.gradle
