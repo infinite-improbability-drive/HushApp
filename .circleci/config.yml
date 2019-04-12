@@ -22,22 +22,20 @@ jobs:
       TERM: dumb
 
     steps:
-      - checkout
-      - run: echo 'Hello World!'
-        
-#    # Download and cache dependencies
-#    - restore_cache:
-#        keys:
-#        - v1-dependencies-{{ checksum "build.gradle" }}
-#        # fallback to using the latest cache if no exact match is found
-#        - v1-dependencies-
-#
-      - run: ./gradlew dependencies
-      - run: ./gradlew detektGenerateConfig
-      - run: ./gradlew detektCheck
-#      - run: ./gradlew testDebug
+    - checkout
+    - run: echo 'Hello World!'
 
-#
+    #    # Download and cache dependencies
+    #    - restore_cache:
+    #        keys:
+    #        - v1-dependencies-{{ checksum "build.gradle" }}
+    #        # fallback to using the latest cache if no exact match is found
+    #        - v1-dependencies-
+    #
+    - run: ./gradlew dependencies
+    - run: ./gradlew detektGenerateConfig
+    - run: ./gradlew detektCheck
+
 #    - save_cache:
 #        paths:
 #        - ~/.gradle
