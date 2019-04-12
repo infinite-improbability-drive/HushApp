@@ -109,7 +109,7 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar) {
-                
+
             }
         })
     }
