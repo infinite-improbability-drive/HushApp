@@ -2,6 +2,7 @@ package com.example.hush
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -10,6 +11,7 @@ import android.os.Build
 import android.support.annotation.NonNull
 import android.support.annotation.RequiresApi
 import android.support.v4.content.ContextCompat
+import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
 
@@ -33,6 +35,8 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
             getPermissionToRecordAudio()
         }
 
+        val SeekA: SeekBar = findViewById(R.id.seekA);
+        val SeekP: SeekBar = findViewById(R.id.seekP);
         tv1 = findViewById(R.id.tv1) as TextView
         button1 = findViewById(R.id.btnStart) as Button
         button2 = findViewById(R.id.btnStop) as Button
@@ -76,6 +80,38 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
         button5.setOnClickListener {
             playSound.stop()
         }
+
+        SeekA.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+
+
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+
+            }
+        })
+
+        SeekP.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+
+
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                
+            }
+        })
     }
 
 
