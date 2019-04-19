@@ -25,15 +25,22 @@ public class PlaySound {
     // originally from http://marblemice.blogspot.com/2010/04/generate-and-play-tone-in-android.html
     // and modified by Steve Pomeroy <steve@staticfree.info>
     private final int duration = 3; // seconds
-    private final int sampleRate = 6000;
-    private final int numSamples = duration * sampleRate;
+    private final int sampleRate = 144000;
+    private final int numSamples = duration * sampleRate; // 18000
     private final double sample[] = new double[numSamples];
-    private final double freqOfTone = 440; // hz
+    private final double freqOfTone = 400; // hz
+
+    private final double periodInSeconds = 1 / freqOfTone;
+    private final double periodInSamples = sampleRate / freqOfTone;
+    private final double numPeriods = numSamples / periodInSamples;
 
     private final byte generatedSnd[] = new byte[2 * numSamples];
-    final AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC,
-            sampleRate, AudioFormat.CHANNEL_OUT_MONO,
-            AudioFormat.ENCODING_PCM_16BIT, generatedSnd.length,
+    final AudioTrack audioTrack = new AudioTrack(
+            AudioManager.STREAM_MUSIC,
+            sampleRate,
+            AudioFormat.CHANNEL_OUT_MONO,
+            AudioFormat.ENCODING_PCM_16BIT,
+            generatedSnd.length,
             AudioTrack.MODE_STATIC);
 
     Handler handler = new Handler();
@@ -79,15 +86,25 @@ public class PlaySound {
         }
     }
 
-    public void changeFrame(int position) {
+    public void phaseShift(int position) {
+        Log.d("position:", Integer.toString(position));
+        Log.d("periodInSamples:", Integer.toString((int) periodInSamples));
+        Log.d("starting frame:", Integer.toString(position));
+        Log.d("ending frame:", Integer.toString((int) (sample.length - periodInSamples + position)));
+
         audioTrack.stop();
-        audioTrack.setPlaybackHeadPosition((generatedSnd.length/2) / (360 - position));
+        // audioTrack.setPlaybackHeadPosition((int) ((360 - position) / periodInSamples));
+        audioTrack.setLoopPoints(position, (int) (sample.length - periodInSamples + position), -1);
         audioTrack.play();
     }
 
     void playSound(){
+        Log.d("starting frame:", Integer.toString(0));
+        Log.d("ending frame:", Integer.toString(generatedSnd.length / 2));
+
         audioTrack.write(generatedSnd, 0, generatedSnd.length);
         audioTrack.setLoopPoints(0, generatedSnd.length / 2, -1);
+        // audioTrack.setLoopPoints((int) ((period) * ((float) position / 360)), sample.length - ((int) period * (position / 360)), -1);
         audioTrack.play();
     }
 }
