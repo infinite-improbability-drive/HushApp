@@ -45,25 +45,41 @@ public class PlaySound {
 
     Handler handler = new Handler();
 
+
+    final Thread thread = new Thread(new Runnable() {
+        public void run() {
+            genTone();
+            handler.post(new Runnable() {
+
+                public void run() {
+                    playSound();
+                }
+            });
+        }
+    });
+
+
     public void play() {
         // Use a new tread as this can take a while
-        final Thread thread = new Thread(new Runnable() {
-            public void run() {
-                genTone();
-                handler.post(new Runnable() {
+//        final Thread thread = new Thread(new Runnable() {
+//            public void run() {
+//                genTone();
+//                handler.post(new Runnable() {
+//
+//                    public void run() {
+//                        playSound();
+//                    }
+//                });
+//            }
+//        });
 
-                    public void run() {
-                        playSound();
-                    }
-                });
-            }
-        });
         thread.start();
         Log.d("bufferSizeInFrames:", Integer.toString(audioTrack.getBufferSizeInFrames()));
     }
 
     public void stop() {
         audioTrack.stop();
+        thread.stop();
     }
 
 
