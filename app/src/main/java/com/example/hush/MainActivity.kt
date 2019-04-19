@@ -27,6 +27,8 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
     lateinit var button3: Button
     lateinit var button4: Button
     lateinit var button5: Button
+    lateinit var buttonMinus: Button
+    lateinit var buttonPlus: Button
     lateinit var tv1: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +44,9 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
         button1 = findViewById(R.id.btnStart) as Button
         button2 = findViewById(R.id.btnStop) as Button
         button3 = findViewById(R.id.btnPlay) as Button
+
+        buttonMinus = findViewById(R.id.btnMinus) as Button
+        buttonPlus = findViewById(R.id.btnPlus) as Button
 
         button4 = findViewById(R.id.btnStart2) as Button
         button5 = findViewById(R.id.btnStop2) as Button
@@ -81,6 +86,16 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
         button5.setOnClickListener {
             playSound.stop()
         }
+        buttonMinus.setOnClickListener {
+            SeekP.progress = seekP.progress - 1
+            val textView: TextView = findViewById(R.id.PNum)
+            textView.text = SeekP.progress.toString()
+        }
+        buttonPlus.setOnClickListener {
+            SeekP.progress = seekP.progress + 1
+            val textView: TextView = findViewById(R.id.PNum)
+            textView.text = SeekP.progress.toString()
+        }
 
         SeekA.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
@@ -109,6 +124,8 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar) {
+                val textView: TextView = findViewById(R.id.PNum)
+                textView.text = SeekP.progress.toString()
                 playSound.phaseShift(SeekP.progress)
             }
         })
