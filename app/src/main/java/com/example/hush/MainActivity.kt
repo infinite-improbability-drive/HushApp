@@ -82,9 +82,13 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
         button4.setOnClickListener {
             playSound = PlaySound()
             playSound.play()
+            button4.setEnabled(false)
+            button5.setEnabled(true)
         }
         button5.setOnClickListener {
             playSound.stop()
+            button4.setEnabled(true)
+            button5.setEnabled(false)
         }
         buttonMinus.setOnClickListener {
             SeekP.progress = seekP.progress - 1
