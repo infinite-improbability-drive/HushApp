@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
     lateinit var buttonMinus: Button
     lateinit var buttonPlus: Button
     lateinit var tv1: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -38,8 +39,8 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
             getPermissionToRecordAudio()
         }
 
-        val SeekA: SeekBar = findViewById(R.id.seekA);
-        val SeekP: SeekBar = findViewById(R.id.seekP);
+        val SeekA: SeekBar = findViewById(R.id.seekA)
+        val SeekP: SeekBar = findViewById(R.id.seekP)
         tv1 = findViewById(R.id.tv1) as TextView
         button1 = findViewById(R.id.btnStart) as Button
         button2 = findViewById(R.id.btnStop) as Button
@@ -102,31 +103,21 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
         }
 
         SeekA.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-
-
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-
             }
-
             override fun onStartTrackingTouch(seekBar: SeekBar) {
                 // TODO Auto-generated method stub
             }
-
             override fun onStopTrackingTouch(seekBar: SeekBar) {
-
             }
         })
 
         SeekP.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-
-
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
             }
-
             override fun onStartTrackingTouch(seekBar: SeekBar) {
                 // TODO Auto-generated method stub
             }
-
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 val textView: TextView = findViewById(R.id.PNum)
                 textView.text = SeekP.progress.toString()

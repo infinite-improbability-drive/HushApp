@@ -1,3 +1,6 @@
+// originally from http://marblemice.blogspot.com/2010/04/generate-and-play-tone-in-android.html
+// and modified by Steve Pomeroy <steve@staticfree.info>
+
 package com.example.hush;
 
 import android.app.Activity;
@@ -22,19 +25,17 @@ import java.io.File;
 import java.io.IOException;
 
 public class PlaySound {
-    // originally from http://marblemice.blogspot.com/2010/04/generate-and-play-tone-in-android.html
-    // and modified by Steve Pomeroy <steve@staticfree.info>
+
     private final int duration = 3; // seconds
     private final int sampleRate = 144000;
-    private final int numSamples = duration * sampleRate; // 18000
-    private final double sample[] = new double[numSamples];
+    private final int numSamples = duration * sampleRate;
+    private final double[] sample = new double[numSamples];
     private final double freqOfTone = 400; // hz
-
     private final double periodInSeconds = 1 / freqOfTone;
     private final double periodInSamples = sampleRate / freqOfTone;
     private final double numPeriods = numSamples / periodInSamples;
 
-    private final byte generatedSnd[] = new byte[2 * numSamples];
+    private final byte[] generatedSnd = new byte[2 * numSamples];
     final AudioTrack audioTrack = new AudioTrack(
             AudioManager.STREAM_MUSIC,
             sampleRate,
@@ -47,6 +48,7 @@ public class PlaySound {
 
 
     final Thread thread = new Thread(new Runnable() {
+
         public void run() {
             genTone();
             handler.post(new Runnable() {
@@ -72,18 +74,21 @@ public class PlaySound {
 //                });
 //            }
 //        });
-
+        Log.d("play/thread " + thread.getId() + " state", thread.getState().toString());
         thread.start();
-        Log.d("bufferSizeInFrames:", Integer.toString(audioTrack.getBufferSizeInFrames()));
+        Log.d("play/thread " + thread.getId() + " state", thread.getState().toString());
+        Log.d("play/bufferSizeInFrames:", Integer.toString(audioTrack.getBufferSizeInFrames()));
     }
 
     public void stop() {
         audioTrack.stop();
-        thread.stop();
+        thread.interrupt();
+        Log.d("stop/thread " + thread.getId() + " state", thread.getState().toString());
     }
 
 
     void genTone(){
+
         // fill out the array
         for (int i = 0; i < numSamples; ++i) {
             sample[i] = Math.sin(2 * Math.PI * i / (sampleRate/freqOfTone));
@@ -103,10 +108,10 @@ public class PlaySound {
     }
 
     public void phaseShift(int position) {
-        Log.d("position:", Integer.toString(position));
-        Log.d("periodInSamples:", Integer.toString((int) periodInSamples));
-        Log.d("starting frame:", Integer.toString(position));
-        Log.d("ending frame:", Integer.toString((int) (sample.length - periodInSamples + position)));
+        Log.d("position", Integer.toString(position));
+        Log.d("periodInSamples", Integer.toString((int) periodInSamples));
+        Log.d("starting frame", Integer.toString(position));
+        Log.d("ending frame", Integer.toString((int) (sample.length - periodInSamples + position)));
 
         audioTrack.stop();
         // audioTrack.setPlaybackHeadPosition((int) ((360 - position) / periodInSamples));
@@ -115,8 +120,8 @@ public class PlaySound {
     }
 
     void playSound(){
-        Log.d("starting frame:", Integer.toString(0));
-        Log.d("ending frame:", Integer.toString(generatedSnd.length / 2));
+        Log.d("starting frame", Integer.toString(0));
+        Log.d("ending frame", Integer.toString(generatedSnd.length / 2));
 
         audioTrack.write(generatedSnd, 0, generatedSnd.length);
         audioTrack.setLoopPoints(0, generatedSnd.length / 2, -1);
