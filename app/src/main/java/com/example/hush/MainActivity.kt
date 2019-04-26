@@ -29,7 +29,10 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
     lateinit var button5: Button
     lateinit var buttonMinus: Button
     lateinit var buttonPlus: Button
+    lateinit var buttonMinusA: Button
+    lateinit var buttonPlusA: Button
     lateinit var tv1: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -38,8 +41,8 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
             getPermissionToRecordAudio()
         }
 
-        val SeekA: SeekBar = findViewById(R.id.seekA);
-        val SeekP: SeekBar = findViewById(R.id.seekP);
+        val SeekA: SeekBar = findViewById(R.id.seekA)
+        val SeekP: SeekBar = findViewById(R.id.seekP)
         tv1 = findViewById(R.id.tv1) as TextView
         button1 = findViewById(R.id.btnStart) as Button
         button2 = findViewById(R.id.btnStop) as Button
@@ -47,6 +50,9 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
 
         buttonMinus = findViewById(R.id.btnMinus) as Button
         buttonPlus = findViewById(R.id.btnPlus) as Button
+
+        buttonMinusA = findViewById(R.id.btnMinusA) as Button
+        buttonPlusA = findViewById(R.id.btnPlusA) as Button
 
         button4 = findViewById(R.id.btnStart2) as Button
         button5 = findViewById(R.id.btnStop2) as Button
@@ -82,47 +88,58 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
         button4.setOnClickListener {
             playSound = PlaySound()
             playSound.play()
+            button4.setEnabled(false)
+            button5.setEnabled(true)
         }
         button5.setOnClickListener {
             playSound.stop()
+            button4.setEnabled(true)
+            button5.setEnabled(false)
         }
         buttonMinus.setOnClickListener {
             SeekP.progress = seekP.progress - 1
             val textView: TextView = findViewById(R.id.PNum)
             textView.text = SeekP.progress.toString()
+            playSound.phaseShift(SeekP.progress)
         }
         buttonPlus.setOnClickListener {
             SeekP.progress = seekP.progress + 1
             val textView: TextView = findViewById(R.id.PNum)
             textView.text = SeekP.progress.toString()
+            playSound.phaseShift(SeekP.progress)
+        }
+        buttonMinusA.setOnClickListener {
+            SeekA.progress = seekA.progress - 1
+            val textView: TextView = findViewById(R.id.ANum)
+            textView.text = SeekA.progress.toString()
+            playSound.changeVolume(SeekA.progress)
+        }
+        buttonPlusA.setOnClickListener {
+            SeekA.progress = seekA.progress + 1
+            val textView: TextView = findViewById(R.id.ANum)
+            textView.text = SeekA.progress.toString()
+            playSound.changeVolume(SeekA.progress)
         }
 
         SeekA.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-
-
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-
+                val textView: TextView = findViewById(R.id.ANum)
+                textView.text = SeekA.progress.toString()
+                playSound.changeVolume(progress)
             }
-
             override fun onStartTrackingTouch(seekBar: SeekBar) {
                 // TODO Auto-generated method stub
             }
-
             override fun onStopTrackingTouch(seekBar: SeekBar) {
-
             }
         })
 
         SeekP.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-
-
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
             }
-
             override fun onStartTrackingTouch(seekBar: SeekBar) {
                 // TODO Auto-generated method stub
             }
-
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 val textView: TextView = findViewById(R.id.PNum)
                 textView.text = SeekP.progress.toString()
