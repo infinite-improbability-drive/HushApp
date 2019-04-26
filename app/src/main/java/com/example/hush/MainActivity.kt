@@ -102,7 +102,6 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
 
 
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                playSound.changeFrame(progress)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {
@@ -110,7 +109,7 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar) {
-
+                playSound.phaseShift(SeekP.progress)
             }
         })
     }

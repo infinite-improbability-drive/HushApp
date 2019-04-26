@@ -12,36 +12,38 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 
 public class PlaySound {
     // originally from http://marblemice.blogspot.com/2010/04/generate-and-play-tone-in-android.html
     // and modified by Steve Pomeroy <steve@staticfree.info>
     private final int duration = 3; // seconds
-    private final int sampleRate = 8000;
-    private final int numSamples = duration * sampleRate;
+    private final int sampleRate = 144000;
+    private final int numSamples = duration * sampleRate; // 18000
     private final double sample[] = new double[numSamples];
-    private final double freqOfTone = 440; // hz
+    private final double freqOfTone = 400; // hz
+
+    private final double periodInSeconds = 1 / freqOfTone;
+    private final double periodInSamples = sampleRate / freqOfTone;
+    private final double numPeriods = numSamples / periodInSamples;
 
     private final byte generatedSnd[] = new byte[2 * numSamples];
-    final AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC,
-            sampleRate, AudioFormat.CHANNEL_OUT_MONO,
-            AudioFormat.ENCODING_PCM_16BIT, generatedSnd.length,
+    final AudioTrack audioTrack = new AudioTrack(
+            AudioManager.STREAM_MUSIC,
+            sampleRate,
+            AudioFormat.CHANNEL_OUT_MONO,
+            AudioFormat.ENCODING_PCM_16BIT,
+            generatedSnd.length,
             AudioTrack.MODE_STATIC);
 
     Handler handler = new Handler();
-
-    //
-    private short inversedBytesInShort; // = short[generatedSnd];
-
 
     public void play() {
         // Use a new tread as this can take a while
@@ -57,6 +59,7 @@ public class PlaySound {
             }
         });
         thread.start();
+        Log.d("bufferSizeInFrames:", Integer.toString(audioTrack.getBufferSizeInFrames()));
     }
 
     public void stop() {
@@ -64,10 +67,10 @@ public class PlaySound {
     }
 
 
-    void genTone() {
+    void genTone(){
         // fill out the array
         for (int i = 0; i < numSamples; ++i) {
-            sample[i] = Math.sin(2 * Math.PI * i / (sampleRate / freqOfTone));
+            sample[i] = Math.sin(2 * Math.PI * i / (sampleRate/freqOfTone));
         }
 
         // convert to 16 bit pcm sound array
@@ -83,30 +86,25 @@ public class PlaySound {
         }
     }
 
-    void playSound() {
+    public void phaseShift(int position) {
+        Log.d("position:", Integer.toString(position));
+        Log.d("periodInSamples:", Integer.toString((int) periodInSamples));
+        Log.d("starting frame:", Integer.toString(position));
+        Log.d("ending frame:", Integer.toString((int) (sample.length - periodInSamples + position)));
 
-        audioTrack.write(generatedSnd, 0, generatedSnd.length);
-        audioTrack.setLoopPoints(0, generatedSnd.length / 2, -1);
+        audioTrack.stop();
+        // audioTrack.setPlaybackHeadPosition((int) ((360 - position) / periodInSamples));
+        audioTrack.setLoopPoints(position, (int) (sample.length - periodInSamples + position), -1);
         audioTrack.play();
     }
 
-    //
+    void playSound(){
+        Log.d("starting frame:", Integer.toString(0));
+        Log.d("ending frame:", Integer.toString(generatedSnd.length / 2));
 
-    // for (int i = 0; i < originalBytes.length; i = i + 2) { ByteBuffer bb = ByteBuffer.allocate(2); bb.order(ByteOrder.LITTLE_ENDIAN); bb.put(originalBytes[i]); bb.put(originalBytes[i + 1]); short shortVal = (short) ~(bb.getShort(0)); inversedBytesInShort[i] = shortVal; }
-
-    public void phaseShift() {
-        for (int i = 0; i < generatedSnd.length; i = i + 2) {
-            ByteBuffer bb = ByteBuffer.allocate(2);
-            bb.order(ByteOrder.LITTLE_ENDIAN);
-            //bb.put(originalBytes[i]);
-            bb.put(generatedSnd[i]);
-            //bb.put(originalBytes[i + 1]);
-            bb.put(generatedSnd[i + 1]);
-            short shortVal = (short) ~(bb.getShort(0));
-            inversedBytesInShort[i] = shortVal;
-        }
-
-
+        audioTrack.write(generatedSnd, 0, generatedSnd.length);
+        audioTrack.setLoopPoints(0, generatedSnd.length / 2, -1);
+        // audioTrack.setLoopPoints((int) ((period) * ((float) position / 360)), sample.length - ((int) period * (position / 360)), -1);
+        audioTrack.play();
     }
 }
-
