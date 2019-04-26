@@ -77,18 +77,17 @@ public class PlaySound {
         Log.d("play/thread " + thread.getId() + " state", thread.getState().toString());
         thread.start();
         Log.d("play/thread " + thread.getId() + " state", thread.getState().toString());
-        Log.d("play/bufferSizeInFrames:", Integer.toString(audioTrack.getBufferSizeInFrames()));
+        Log.d("play/bufferSizeInFrames", Integer.toString(audioTrack.getBufferSizeInFrames()));
     }
 
     public void stop() {
         audioTrack.stop();
+        Log.d("stop/thread " + thread.getId() + " state", thread.getState().toString());
         thread.interrupt();
         Log.d("stop/thread " + thread.getId() + " state", thread.getState().toString());
     }
 
-
     void genTone(){
-
         // fill out the array
         for (int i = 0; i < numSamples; ++i) {
             sample[i] = Math.sin(2 * Math.PI * i / (sampleRate/freqOfTone));
@@ -108,10 +107,11 @@ public class PlaySound {
     }
 
     public void phaseShift(int position) {
-        Log.d("position", Integer.toString(position));
-        Log.d("periodInSamples", Integer.toString((int) periodInSamples));
-        Log.d("starting frame", Integer.toString(position));
-        Log.d("ending frame", Integer.toString((int) (sample.length - periodInSamples + position)));
+        Log.d("phaseShift/thread " + thread.getId() + " state", thread.getState().toString());
+        Log.d("phaseShift/position", Integer.toString(position));
+        Log.d("phaseShift/periodInSamples", Integer.toString((int) periodInSamples));
+        Log.d("phaseShift/starting frame", Integer.toString(position));
+        Log.d("phaseShift/ending frame", Integer.toString((int) (sample.length - periodInSamples + position)));
 
         audioTrack.stop();
         // audioTrack.setPlaybackHeadPosition((int) ((360 - position) / periodInSamples));
@@ -120,8 +120,9 @@ public class PlaySound {
     }
 
     void playSound(){
-        Log.d("starting frame", Integer.toString(0));
-        Log.d("ending frame", Integer.toString(generatedSnd.length / 2));
+        Log.d("playSound/thread " + thread.getId() + " state", thread.getState().toString());
+        Log.d("playSound/starting frame", Integer.toString(0));
+        Log.d("playSound/ending frame", Integer.toString(generatedSnd.length / 2));
 
         audioTrack.write(generatedSnd, 0, generatedSnd.length);
         audioTrack.setLoopPoints(0, generatedSnd.length / 2, -1);
