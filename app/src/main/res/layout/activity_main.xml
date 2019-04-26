@@ -70,6 +70,26 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
+        android:id="@+id/btnMinusA"
+        android:layout_width="38dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginBottom="176dp"
+        android:text="-"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnPlusA"
+        android:layout_width="36dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="368dp"
+        android:layout_marginBottom="176dp"
+        android:text="+"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
         android:id="@+id/btnStop"
         android:layout_width="125dp"
         android:layout_height="86dp"
@@ -128,8 +148,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="44dp"
-        android:max="10"
-        android:progress="1"
+        android:max="100"
+        android:progress="100"
         app:layout_constraintBottom_toTopOf="@+id/labelP"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -199,6 +219,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/seekP"
         app:layout_constraintVertical_bias="0.133" />
+
+    <TextView
+        android:id="@+id/ANum"
+        android:layout_width="66dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="152dp"
+        android:layout_marginBottom="136dp"
+        android:text="100"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekA"
+        app:layout_constraintVertical_bias="0.0" />
 
     <!--<android.support.design.widget.FloatingActionButton-->
     <!--android:id="@+id/fab"-->

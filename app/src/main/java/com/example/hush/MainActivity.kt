@@ -29,6 +29,8 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
     lateinit var button5: Button
     lateinit var buttonMinus: Button
     lateinit var buttonPlus: Button
+    lateinit var buttonMinusA: Button
+    lateinit var buttonPlusA: Button
     lateinit var tv1: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +50,9 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
 
         buttonMinus = findViewById(R.id.btnMinus) as Button
         buttonPlus = findViewById(R.id.btnPlus) as Button
+
+        buttonMinusA = findViewById(R.id.btnMinusA) as Button
+        buttonPlusA = findViewById(R.id.btnPlusA) as Button
 
         button4 = findViewById(R.id.btnStart2) as Button
         button5 = findViewById(R.id.btnStop2) as Button
@@ -103,9 +108,24 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
             textView.text = SeekP.progress.toString()
             playSound.phaseShift(SeekP.progress)
         }
+        buttonMinusA.setOnClickListener {
+            SeekA.progress = seekA.progress - 1
+            val textView: TextView = findViewById(R.id.ANum)
+            textView.text = SeekA.progress.toString()
+            playSound.changeVolume(SeekA.progress)
+        }
+        buttonPlusA.setOnClickListener {
+            SeekA.progress = seekA.progress + 1
+            val textView: TextView = findViewById(R.id.ANum)
+            textView.text = SeekA.progress.toString()
+            playSound.changeVolume(SeekA.progress)
+        }
 
         SeekA.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                val textView: TextView = findViewById(R.id.ANum)
+                textView.text = SeekA.progress.toString()
+                playSound.changeVolume(progress)
             }
             override fun onStartTrackingTouch(seekBar: SeekBar) {
                 // TODO Auto-generated method stub

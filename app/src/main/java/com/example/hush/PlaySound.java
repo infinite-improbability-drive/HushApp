@@ -122,6 +122,12 @@ public class PlaySound {
         audioTrack.play();
     }
 
+    public void changeVolume(int position) {
+        float z = (float) position / 100;
+        audioTrack.setVolume(z);
+
+    }
+
     void playSound(){
         Log.d("playSound/thread " + thread.getId() + " state", thread.getState().toString());
         Log.d("playSound/starting frame", Integer.toString(0));
