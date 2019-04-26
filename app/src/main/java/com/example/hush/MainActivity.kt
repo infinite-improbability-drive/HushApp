@@ -95,11 +95,13 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
             SeekP.progress = seekP.progress - 1
             val textView: TextView = findViewById(R.id.PNum)
             textView.text = SeekP.progress.toString()
+            playSound.phaseShift(SeekP.progress)
         }
         buttonPlus.setOnClickListener {
             SeekP.progress = seekP.progress + 1
             val textView: TextView = findViewById(R.id.PNum)
             textView.text = SeekP.progress.toString()
+            playSound.phaseShift(SeekP.progress)
         }
 
         SeekA.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
