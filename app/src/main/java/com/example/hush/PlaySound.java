@@ -23,6 +23,9 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class PlaySound {
 
@@ -129,4 +132,22 @@ public class PlaySound {
         // audioTrack.setLoopPoints((int) ((period) * ((float) position / 360)), sample.length - ((int) period * (position / 360)), -1);
         audioTrack.play();
     }
+
+
+    // see if time delay works. To run the method myTask every 5 second
+    public void timeDelay() {
+        final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+        executorService.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                myTask();        // need to implement thread here so that one thread gets delayed.
+            }
+        }, 0, 5, TimeUnit.SECONDS);
+    }
+
+     void myTask() {
+        System.out.println("Running");
+    }
+
+
 }
