@@ -51,6 +51,7 @@ class RecorderTest {
     @Throws(Exception::class)
     fun testFile() {
         testRecorder.file = File("some filepath")
+        assertNotNull(testRecorder.file)
     }
 
     @Test

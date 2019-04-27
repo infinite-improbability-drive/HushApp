@@ -43,6 +43,20 @@ class MainActivityTest {
 
     @Test
     @Throws(Exception::class)
+    fun testLateInit() {
+        // assertNull(testMainActivity.recorder)
+       //  assertEquals(testMainActivity.recorder, null)
+        testMainActivity.recorder = Recorder()
+        assertNotNull(testMainActivity.recorder)
+        testMainActivity.player = Player()
+        assertNotNull(testMainActivity.player)
+        testMainActivity.playSound = PlaySound()
+        assertNotNull(testMainActivity.playSound)
+    }
+
+
+    @Test
+    @Throws(Exception::class)
     fun onCreateTest() {
 
         //Activity variables
