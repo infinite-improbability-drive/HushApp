@@ -15,7 +15,7 @@ import android.widget.Toast
 
 private const val RECORD_AUDIO_REQUEST_CODE =123
 class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
-
+    
     lateinit var recorder: Recorder
     lateinit var player: Player
     lateinit var button1: Button
