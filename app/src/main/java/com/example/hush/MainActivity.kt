@@ -177,7 +177,7 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
             // Fire off an async request to actually get the permission
             // This will show the standard permission request dialog UI
             requestPermissions(
-                    arrayOf<String>(
+                    arrayOf(
                             Manifest.permission.READ_EXTERNAL_STORAGE,
                             Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE
                     ),
