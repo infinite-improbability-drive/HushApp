@@ -117,8 +117,8 @@ public class PlaySound {
         Log.d("phaseShift/ending frame", Integer.toString((int) (sample.length - periodInSamples + position)));
 
         audioTrack.stop();
-        // audioTrack.setPlaybackHeadPosition((int) ((360 - position) / periodInSamples));
-        audioTrack.setLoopPoints(position, (int) (sample.length - periodInSamples + position), -1);
+        audioTrack.setPlaybackHeadPosition(360 - position);
+        audioTrack.setLoopPoints(position, (sampleRate + position), -1);
         audioTrack.play();
     }
 
