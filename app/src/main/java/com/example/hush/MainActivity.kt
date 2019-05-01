@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
     lateinit var recorder: Recorder
     lateinit var player: Player
     lateinit var playSound: PlaySound
+    lateinit var playSound2: PlaySound
     lateinit var button1: Button
     lateinit var button2: Button
     lateinit var button3: Button
@@ -40,6 +41,7 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getPermissionToRecordAudio()
         }
+
 
         val SeekA: SeekBar = findViewById(R.id.seekA)
         val SeekP: SeekBar = findViewById(R.id.seekP)
@@ -88,11 +90,14 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
         button4.setOnClickListener {
             playSound = PlaySound()
             playSound.play()
+            playSound2 = PlaySound()
+            playSound2.play()
             button4.setEnabled(false)
             button5.setEnabled(true)
         }
         button5.setOnClickListener {
             playSound.stop()
+            playSound2.stop()
             button4.setEnabled(true)
             button5.setEnabled(false)
         }
