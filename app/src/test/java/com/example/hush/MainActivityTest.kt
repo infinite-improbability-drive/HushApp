@@ -27,60 +27,60 @@ import org.junit.Rule
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.Shadows
 import org.robolectric.shadow.api.Shadow
+import org.robolectric.shadows.ShadowApplication
 
 @RunWith(RobolectricTestRunner::class)
 
 class MainActivityTest {
 
+    //Can't get this to work. Not sure why. Followed everything found online with no success.
+    //Can't test anything else in this class without this functionality.
     //@get:Rule var permissionRule = GrantPermissionRule.grant(android.Manifest.permission.RECORD_AUDIO)
 
     lateinit var testMainActivity: MainActivity
+    lateinit var application: ShadowApplication
+    lateinit var activity: Activity
 
     @Before
     fun setup() {
         testMainActivity = MainActivity()
-    }
-
-    @Test
-    @Throws(Exception::class)
-    fun onCreateTest() {
 
         //Activity variables
         val intent = Intent()
         val bundle = Bundle()
         intent.putExtras(bundle)
         val controller = Robolectric.buildActivity(MainActivity::class.java, intent).create()
-        val activity = controller.get() as Activity
+        activity = controller.get() as Activity
 
         //Start activity
         controller.start()
 
+        application = Shadows.shadowOf(activity.application)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun testLateInit() {
+        // assertNull(testMainActivity.recorder)
+       //  assertEquals(testMainActivity.recorder, null)
+        testMainActivity.recorder = Recorder()
+        testMainActivity.player = Player()
+        testMainActivity.playSound = PlaySound()
+//        testMainActivity.button1.performClick()
+
+        assertNotNull(testMainActivity.recorder)
+        assertNotNull(testMainActivity.player)
+        assertNotNull(testMainActivity.playSound)
+    }
+
+
+    @Test
+    @Throws(Exception::class)
+    fun onCreateTest() {
+
         //Asserts
         assertFalse(activity.isFinishing)
     }
-
-//    @Test
-//    fun onCompletionTest() {
-//
-//        //Method Variables
-//        var mp = MediaPlayer()
-//
-//        //Activity Variables
-//        val intent = Intent()
-//        val bundle = Bundle()
-//        intent.putExtras(bundle)
-//        val controller = Robolectric.buildActivity(MainActivity::class.java, intent).create()
-//        val activity = controller.get() as Activity
-//
-//        controller.start()
-//
-//        //Call method that is being tested.
-//        testMainActivity.onCompletion(mp)
-//
-//        //Asserts
-//        assertNotNull(mp)
-//
-//    }
 
     @Test
     @Throws(Exception::class)
@@ -99,19 +99,13 @@ class MainActivityTest {
         val latestToast = ShadowToast.getTextOfLatestToast()
 
         //Asserts
+        assertFalse(activity.isFinishing)
         assertNull(latestToast)
     }
 
     @Test
     @Throws(Exception::class)
     fun onRequestPermissionsResultTwoGrantedPermissions() {
-
-        //Activity Variables
-        val intent = Intent()
-        val bundle = Bundle()
-        intent.putExtras(bundle)
-        val controller = Robolectric.buildActivity(MainActivity::class.java, intent).create()
-        val activity = controller.get() as Activity
 
         //Method Variables
         val testRequestCode = 123
@@ -121,8 +115,6 @@ class MainActivityTest {
         //Changed to have 2 permissions granted instead of 3
         val testGrantResults = intArrayOf(PackageManager.PERMISSION_GRANTED,
                 PackageManager.PERMISSION_GRANTED)
-
-        controller.start()
 
         //Call method that is being tested.
         activity.onRequestPermissionsResult(testRequestCode, testRequestPermissions,
@@ -140,13 +132,6 @@ class MainActivityTest {
     @Throws(Exception::class)
     fun onRequestPermissionsResultPermissionDenied() {
 
-        //Activity Variables
-        val intent = Intent()
-        val bundle = Bundle()
-        intent.putExtras(bundle)
-        val controller = Robolectric.buildActivity(MainActivity::class.java, intent).create()
-        val activity = controller.get() as Activity
-
         //Method Variables
         val testRequestCode = 123
         val testRequestPermissions = arrayOf( Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -156,8 +141,6 @@ class MainActivityTest {
         val testGrantResults = intArrayOf(PackageManager.PERMISSION_DENIED,
                 PackageManager.PERMISSION_GRANTED,
                 PackageManager.PERMISSION_GRANTED)
-
-        controller.start()
 
         //Call the method that is being tested
         activity.onRequestPermissionsResult(testRequestCode, testRequestPermissions,
