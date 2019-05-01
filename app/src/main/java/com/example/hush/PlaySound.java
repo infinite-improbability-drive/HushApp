@@ -8,9 +8,6 @@ import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.Handler;
 import android.util.Log;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class PlaySound {
 
@@ -100,20 +97,5 @@ public class PlaySound {
         audioTrack.write(generatedSnd, 0, generatedSnd.length);
         audioTrack.setLoopPoints(0, generatedSnd.length / 2, -1);
         audioTrack.play();
-    }
-
-    // see if time delay works. To run the method myTask every 5 second
-    public void timeDelay() {
-        final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-        executorService.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                myTask();        // need to implement thread here so that one thread gets delayed.
-            }
-        }, 0, 5, TimeUnit.SECONDS);
-    }
-
-     void myTask() {
-        System.out.println("Running");
     }
 }
