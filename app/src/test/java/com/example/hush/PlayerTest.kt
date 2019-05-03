@@ -1,13 +1,13 @@
 package com.example.hush
 
 import android.media.MediaPlayer
+//import org.junit.Assert.assertThat
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import java.io.File
 //import javax.sql.DataSource
 import org.junit.Before
 import org.junit.Test
-//import org.robolectric.Shadows.shadowOf
 
 @RunWith(RobolectricTestRunner::class)
 
@@ -36,4 +36,20 @@ class PlayerTest {
         }
     }
 
-}
+    @Test
+    @Throws(Exception::class)
+    fun testPrepareForPlayback() {
+
+        val file: File? = null
+        if (::testPlayer.isInitialized) {
+            if(file != null){
+            testPlayer.setup(file)
+            mediaPlayer.start()
+                if (::mediaPlayer.isInitialized) {
+                    mediaPlayer.prepare()
+                }
+            }
+            }
+        }
+    }
+
