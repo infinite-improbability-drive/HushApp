@@ -25,7 +25,6 @@ class PlayerTest {
 
     @Test
     @Throws(Exception::class)
-
     fun testPlay(){
         val file: File? = null
         if (::testPlayer.isInitialized) {
@@ -39,7 +38,6 @@ class PlayerTest {
     @Test
     @Throws(Exception::class)
     fun testPrepareForPlayback() {
-
         val file: File? = null
         if (::testPlayer.isInitialized) {
             if(file != null){
