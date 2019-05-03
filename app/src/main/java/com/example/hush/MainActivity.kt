@@ -2,7 +2,6 @@ package com.example.hush
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -42,7 +41,6 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
             getPermissionToRecordAudio()
         }
 
-
         val SeekA: SeekBar = findViewById(R.id.seekA)
         val SeekP: SeekBar = findViewById(R.id.seekP)
         tv1 = findViewById(R.id.tv1) as TextView
@@ -67,7 +65,6 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
             button1.setEnabled(false)
             button2.setEnabled(true)
         }
-
         button2.setOnClickListener {
             recorder.stop()
             player = Player()
@@ -79,7 +76,6 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
             button3.setEnabled(true)
             tv1.text = "Ready to play"
         }
-
         button3.setOnClickListener {
             player.play()
             button1.setEnabled(false)
@@ -125,7 +121,6 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
             textView.text = SeekA.progress.toString()
             playSound.changeVolume(SeekA.progress)
         }
-
         SeekA.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 val textView: TextView = findViewById(R.id.ANum)
@@ -138,7 +133,6 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
             override fun onStopTrackingTouch(seekBar: SeekBar) {
             }
         })
-
         SeekP.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
             }
@@ -153,7 +147,6 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
         })
     }
 
-
     override fun onCompletion(mp: MediaPlayer) {
         button1.setEnabled(true)
         button2.setEnabled(true)
@@ -161,14 +154,8 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
         tv1.setText("Ready")
     }
 
-
     @RequiresApi(api = Build.VERSION_CODES.M)
     fun getPermissionToRecordAudio() {
-        // 1) Use the support library version ContextCompat.checkSelfPermission(...) to avoid
-        // checking the build version since Context.checkSelfPermission(...) is only available
-        // in Marshmallow
-        // 2) Always check for permission (even if permission has already been granted)
-        // since the user can revoke permissions at any time through Settings
         if ((ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
                         !== PackageManager.PERMISSION_GRANTED
                         || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -176,11 +163,6 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
                         || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         !== PackageManager.PERMISSION_GRANTED)
         ) {
-            // The permission is NOT already granted.
-            // Check if the user has been asked about this permission already and denied
-            // it. If so, we want to give more explanation about why the permission is needed.
-            // Fire off an async request to actually get the permission
-            // This will show the standard permission request dialog UI
             requestPermissions(
                     arrayOf(
                             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -191,17 +173,15 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
         }
     }
 
-    // Callback with the request from calling requestPermissions(...)
     @RequiresApi(api = Build.VERSION_CODES.M)
     override fun onRequestPermissionsResult(
             requestCode: Int,
             @NonNull permissions: Array<String>,
             @NonNull grantResults: IntArray
     ) {
-        // Make sure it's our original READ_CONTACTS request
         if (requestCode == RECORD_AUDIO_REQUEST_CODE) {
             if ((grantResults.size == 3 && grantResultsCorrect(grantResults)))
-            //Toast.makeText(this, "Record Audio permission granted", Toast.LENGTH_SHORT).show();
+
             else {
                 Toast.makeText(
                         this, "You must give permissions to use this app. App is exiting.",
