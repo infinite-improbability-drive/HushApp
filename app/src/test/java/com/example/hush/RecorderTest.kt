@@ -16,19 +16,12 @@ class RecorderTest {
     @Before
     fun setup() {
         testRecorder = Recorder()
-    }
-
-    @Test
-    @Throws(Exception::class)
-    fun onCreateTest() {
-
         testRecorder.setup()
     }
 
     @Test
     @Throws(Exception::class)
     fun testFile() {
-
         testRecorder.file = File("some filepath")
         assertNotNull(testRecorder.file)
     }
