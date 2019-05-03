@@ -38,7 +38,7 @@ public class PlaySound {
     private final double periodInSamples = sampleRate / freqOfTone;
     private final double numPeriods = numSamples / periodInSamples;
 
-    private final byte[] generatedSnd = new byte[2 * numSamples];
+    private byte[] generatedSnd = new byte[2 * numSamples];
     AudioTrack audioTrack = new AudioTrack(
             AudioManager.STREAM_MUSIC,
             sampleRate,
@@ -101,6 +101,10 @@ public class PlaySound {
         // assumes the sample buffer is normalised.
         int idx = 0;
         for (final double dVal : sample) {
+
+            if (idx == generatedSnd.length - 3) {
+                Log.d("hi how are you", "i am fine thanks");
+            }
             // scale to maximum amplitude
             final short val = (short) ((dVal * 32767));
             // in 16 bit wav PCM, first byte is the low order byte
@@ -131,10 +135,11 @@ public class PlaySound {
 
     public void changeFrequency(int frequency) {
         this.freqOfTone = frequency;
-//        this.sampleRate = frequency * 360;
-//        this.numSamples = this.duration * this.sampleRate;
-//        this.sample = new double[numSamples];
-        audioTrack.stop();
+        this.sampleRate = frequency * 360;
+        this.numSamples = this.duration * this.sampleRate;
+        this.sample = new double[this.numSamples];
+        this.generatedSnd = new byte[2 * this.numSamples];
+
         stop();
         play();
     }
