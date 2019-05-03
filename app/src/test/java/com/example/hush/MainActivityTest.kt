@@ -48,10 +48,12 @@ class MainActivityTest {
         testMainActivity.recorder = Recorder()
         testMainActivity.player = Player()
         testMainActivity.playSound = PlaySound()
+        testMainActivity.playSound2 = PlaySound()
 
         assertNotNull(testMainActivity.recorder)
         assertNotNull(testMainActivity.player)
         assertNotNull(testMainActivity.playSound)
+        assertNotNull(testMainActivity.playSound2)
     }
 
     @Test
