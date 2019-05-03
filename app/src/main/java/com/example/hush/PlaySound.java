@@ -30,16 +30,16 @@ import java.util.concurrent.TimeUnit;
 public class PlaySound {
 
     private final int duration = 3; // seconds
-    private final int sampleRate = 144000;
-    private final int numSamples = duration * sampleRate;
-    private final double[] sample = new double[numSamples];
-    private final double freqOfTone = 400; // hz
+    private int sampleRate = 144000;
+    private int numSamples = duration * sampleRate;
+    private double[] sample = new double[numSamples];
+    private double freqOfTone = 400; // hz
     private final double periodInSeconds = 1 / freqOfTone;
     private final double periodInSamples = sampleRate / freqOfTone;
     private final double numPeriods = numSamples / periodInSamples;
 
     private final byte[] generatedSnd = new byte[2 * numSamples];
-    final AudioTrack audioTrack = new AudioTrack(
+    AudioTrack audioTrack = new AudioTrack(
             AudioManager.STREAM_MUSIC,
             sampleRate,
             AudioFormat.CHANNEL_OUT_MONO,
@@ -50,7 +50,7 @@ public class PlaySound {
     Handler handler = new Handler();
 
 
-    final Thread thread = new Thread(new Runnable() {
+    Thread thread = new Thread(new Runnable() {
 
         public void run() {
             genTone();
@@ -65,18 +65,18 @@ public class PlaySound {
 
 
     public void play() {
-        // Use a new tread as this can take a while
-//        final Thread thread = new Thread(new Runnable() {
-//            public void run() {
-//                genTone();
-//                handler.post(new Runnable() {
-//
-//                    public void run() {
-//                        playSound();
-//                    }
-//                });
-//            }
-//        });
+      //   Use a new tread as this can take a while
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+                genTone();
+                handler.post(new Runnable() {
+
+                    public void run() {
+                        playSound();
+                    }
+                });
+            }
+        });
         Log.d("play/thread " + thread.getId() + " state", thread.getState().toString());
         thread.start();
         Log.d("play/thread " + thread.getId() + " state", thread.getState().toString());
@@ -88,6 +88,7 @@ public class PlaySound {
         Log.d("stop/thread " + thread.getId() + " state", thread.getState().toString());
         thread.interrupt();
         Log.d("stop/thread " + thread.getId() + " state", thread.getState().toString());
+        Log.i("frequency", Double.toString(this.freqOfTone));
     }
 
     void genTone(){
@@ -126,6 +127,16 @@ public class PlaySound {
         float z = (float) position / 100;
         audioTrack.setVolume(z);
 
+    }
+
+    public void changeFrequency(int frequency) {
+        this.freqOfTone = frequency;
+//        this.sampleRate = frequency * 360;
+//        this.numSamples = this.duration * this.sampleRate;
+//        this.sample = new double[numSamples];
+        audioTrack.stop();
+        stop();
+        play();
     }
 
     void playSound(){
