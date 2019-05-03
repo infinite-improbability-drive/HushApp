@@ -49,5 +49,21 @@ class PlayerTest {
             }
             }
         }
+
+    @Test
+    @Throws(Exception::class)
+    fun testSetupFileForPlayback() {  // this is a private method
+        val file: File? = null
+        //testPlayer.setup(file)
+        if (::testPlayer.isInitialized) {
+            if (file != null) {
+                testPlayer.setup(file)
+                if (::mediaPlayer.isInitialized) {
+                    mediaPlayer.setDataSource(file.absolutePath)
+                }
+            }
+        }
     }
+
+}
 
