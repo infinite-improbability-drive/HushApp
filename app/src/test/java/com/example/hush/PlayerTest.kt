@@ -22,6 +22,18 @@ class PlayerTest {
 
     @Test
     @Throws(Exception::class)
+    fun testPlay(){
+        val file: File? = null
+        if (::testPlayer.isInitialized) {
+            if(file != null) {
+                testPlayer.setup(file)
+                testPlayer.play()
+            }
+        }
+    }
+
+    @Test
+    @Throws(Exception::class)
     fun testSetupFileForPlayback() {
         val file: File? = null
         if (::testPlayer.isInitialized) {
@@ -45,18 +57,6 @@ class PlayerTest {
                 if (::mediaPlayer.isInitialized) {
                     mediaPlayer.prepare()
                 }
-            }
-        }
-    }
-
-    @Test
-    @Throws(Exception::class)
-    fun testPlay(){
-        val file: File? = null
-        if (::testPlayer.isInitialized) {
-            if(file != null) {
-                testPlayer.setup(file)
-                testPlayer.play()
             }
         }
     }
