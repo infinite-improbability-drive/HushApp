@@ -11,6 +11,7 @@ import android.os.Build
 import android.support.annotation.NonNull
 import android.support.annotation.RequiresApi
 import android.support.v4.content.ContextCompat
+import android.util.Log
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
@@ -96,9 +97,9 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
             tv1.setText("Playing")
         }
         button4.setOnClickListener {
-            playSound = PlaySound()
+            playSound = PlaySound(500)
             playSound.play()
-            playSound2 = PlaySound()
+            playSound2 = PlaySound(500)
             playSound2.play()
             button4.setEnabled(false)
             button5.setEnabled(true)
@@ -183,8 +184,14 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 val textView: TextView = findViewById(R.id.FNum)
                 textView.text = SeekF.progress.toString()
-                playSound.changeFrequency(SeekF.progress)
-                playSound2.changeFrequency(SeekF.progress)
+//                playSound.changeFrequency(SeekF.progress)
+//                playSound2.changeFrequency(SeekF.progress)
+                playSound.stop()
+                playSound2.stop()
+                playSound = PlaySound(SeekF.progress)
+                playSound.play()
+                playSound2 = PlaySound(SeekF.progress)
+                playSound2.play()
             }
         })
     }

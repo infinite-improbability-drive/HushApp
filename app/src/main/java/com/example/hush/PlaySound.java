@@ -29,46 +29,58 @@ import java.util.concurrent.TimeUnit;
 
 public class PlaySound {
 
-    private final int duration = 3; // seconds
-    private int sampleRate = 144000;
-    private int numSamples = duration * sampleRate;
-    private double[] sample = new double[numSamples];
-    private double freqOfTone = 400; // hz
-    private final double periodInSeconds = 1 / freqOfTone;
-    private final double periodInSamples = sampleRate / freqOfTone;
-    private final double numPeriods = numSamples / periodInSamples;
-
-    private byte[] generatedSnd = new byte[2 * numSamples];
-    AudioTrack audioTrack = new AudioTrack(
-            AudioManager.STREAM_MUSIC,
-            sampleRate,
-            AudioFormat.CHANNEL_OUT_MONO,
-            AudioFormat.ENCODING_PCM_16BIT,
-            generatedSnd.length,
-            AudioTrack.MODE_STATIC);
-
-    Handler handler = new Handler();
 
 
-    Thread thread = new Thread(new Runnable() {
+    private int duration = 3; // seconds
+    private int sampleRate;
+    private int numSamples;
+    private double[] sample;
+    private double freqOfTone; // hz
+    //private final double periodInSeconds = 1 / freqOfTone;
+    private double periodInSamples = sampleRate / freqOfTone;
+    //private final double numPeriods = numSamples / periodInSamples;
+    private byte[] generatedSnd;
+    private AudioTrack audioTrack;
 
-        public void run() {
-            genTone();
-            handler.post(new Runnable() {
+    public PlaySound(int y) {
+        freqOfTone = y;
+        sampleRate = (int)freqOfTone * 360;
+        numSamples = duration * sampleRate;
+        sample = new double[numSamples];
+        generatedSnd = new byte[2 * numSamples];
+        audioTrack = new AudioTrack(
+                AudioManager.STREAM_MUSIC,
+                sampleRate,
+                AudioFormat.CHANNEL_OUT_MONO,
+                AudioFormat.ENCODING_PCM_16BIT,
+                generatedSnd.length,
+                AudioTrack.MODE_STATIC);
+    }
 
-                public void run() {
-                    playSound();
-                }
-            });
-        }
-    });
+    Handler handler;
+
+
+    Thread thread;
+//    = new Thread(new Runnable() {
+//
+//        public void run() {
+//            genTone();
+//            handler.post(new Runnable() {
+//
+//                public void run() {
+//                    playSound();
+//                }
+//            });
+//        }
+//    });
 
 
     public void play() {
       //   Use a new tread as this can take a while
-        Thread thread = new Thread(new Runnable() {
+        thread = new Thread(new Runnable() {
             public void run() {
                 genTone();
+                handler = new Handler();
                 handler.post(new Runnable() {
 
                     public void run() {
@@ -78,9 +90,10 @@ public class PlaySound {
             }
         });
         Log.d("play/thread " + thread.getId() + " state", thread.getState().toString());
-        thread.start();
+        thread.run();
         Log.d("play/thread " + thread.getId() + " state", thread.getState().toString());
         Log.d("play/bufferSizeInFrames", Integer.toString(audioTrack.getBufferSizeInFrames()));
+        Log.d("play/nativeOutputSampleRate", Integer.toString(audioTrack.getNativeOutputSampleRate(AudioManager.STREAM_MUSIC)));
     }
 
     public void stop() {
@@ -141,6 +154,13 @@ public class PlaySound {
         this.generatedSnd = new byte[2 * this.numSamples];
 
         stop();
+        this.audioTrack = new AudioTrack(
+                AudioManager.STREAM_MUSIC,
+                this.sampleRate,
+                AudioFormat.CHANNEL_OUT_MONO,
+                AudioFormat.ENCODING_PCM_16BIT,
+                this.generatedSnd.length,
+                AudioTrack.MODE_STATIC);
         play();
     }
 
