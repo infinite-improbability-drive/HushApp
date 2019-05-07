@@ -103,9 +103,7 @@ https://www.toolsqa.com/mobile-automation/appium/download-and-install-appium-des
 https://wiki.saucelabs.com/display/DOCS/Getting+Started+with+Appium+for+Mobile+Native+Application+Testing
 
 To run Appium Tests: 
-	- 1. Download Appium Desktop Server here
-		 https://github.com/appium/appium-desktop/releases
-		 
+	- 1. Download Appium Desktop Server here https://github.com/appium/appium-desktop/releases
 	- 2. Run Appium Desktop server using localhost address (127.0.0.1) and the port specified (4723) in ExampleAppiumTest.java
 	- 3. Run the app in the emulator
 	- 4. Run Appium Tests
