@@ -67,9 +67,9 @@ https://coding180.com/kotlin-android/capturing-audio-using-the-mediarecorder-cla
 https://github.com/arturbosch/detekt
 
 To run detekt checks:
-	- 1. Navigate to repository root folder
-	- 2. Enter 'gradlew detektGenerateConfig' then 'gradlew detektCheck' to run detekt checks for code smells and the like. 
-	- 3. Enter 'gradlew tasks' to see all gradle tasks
+- 1. Navigate to repository root folder
+- 2. Enter 'gradlew detektGenerateConfig' then 'gradlew detektCheck' to run detekt checks for code smells and the like. 
+- 3. Enter 'gradlew tasks' to see all gradle tasks
 
 
 # Testing Resources:
