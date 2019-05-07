@@ -1,11 +1,13 @@
 package com.example.hush
 
 import android.media.MediaPlayer
+import android.os.Environment
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import java.io.File
 import org.junit.Before
 import org.junit.Test
+import java.io.IOException
 
 @RunWith(RobolectricTestRunner::class)
 class PlayerTest {
@@ -21,6 +23,22 @@ class PlayerTest {
         //shadowMediaPlayer = shadowOf(mediaPlayer)
     }
 
+    @Test
+    @Throws(Exception::class)
+    fun testSetup() {
+        // val file: File? = null
+        if (::testPlayer.isInitialized) {
+            val path = File(Environment.getExternalStorageDirectory().getPath())
+            try {
+                val file = File.createTempFile("temporary", ".3gp", path)
+                if(file != null) {
+                    testPlayer.setup(file)
+                    testPlayer.play()
+                }
+            } catch (e: IOException) {
+            }
+        }
+    }
     @Test
     @Throws(Exception::class)
     fun testSetupFileForPlayback() {
@@ -63,6 +81,7 @@ class PlayerTest {
     @Throws(Exception::class)
     fun shouldThrowNullPointerException(){
         // implement an exception to test-try catch block.
-        }
+
+    }
 }
 
