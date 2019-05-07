@@ -19,17 +19,17 @@ Core Team: Nick Barnes Heather Minke Nila Niroula John Samson
 
 
 
-# Noise Cancellation Resources:
+# Noise Cancellation Resources
 
 https://en.wikipedia.org/wiki/Active_noise_control
 
 
-# Android Studio:
+# Android Studio
 
 https://developer.android.com/studio/
  
 
-# Android Documentation:
+# Android Documentation
 
 https://developer.android.com/reference/android/media/AudioRecord
 
@@ -44,14 +44,14 @@ https://developer.android.com/guide/topics/permissions/overview
 https://developer.android.com/training/permissions/requesting
 
 
-# Kotlin Documentation: 
+# Kotlin Documentation
 
 https://kotlinlang.org/
 
 https://kotlinlang.org/docs/reference/
 
 
-# Audio Recording Examples:
+# Audio Recording Examples
 
 https://www.simplifiedcoding.net/audio-recording-android-example/
 
@@ -62,7 +62,7 @@ https://inducesmile.com/android/android-voice-recording-application-example/
 https://coding180.com/kotlin-android/capturing-audio-using-the-mediarecorder-class/
 
 
-# Detekt Static Analysis for Android:
+# Detekt Static Analysis for Android
 
 https://github.com/arturbosch/detekt
 
@@ -72,12 +72,12 @@ To run detekt checks:
 - 3. Enter 'gradlew tasks' to see all gradle tasks
 
 
-# Testing Resources:
+# Testing Resources
 
 https://stuff.mit.edu/afs/sipb/project/android/docs/tools/testing/activity_test.html
 
 
-# Robolectric Unit Testing for Android:
+# Robolectric Unit Testing for Android
 
 http://robolectric.org/
 
@@ -90,7 +90,7 @@ https://proandroiddev.com/robolectric-testing-with-androidjunitrunner-86292bceef
 https://android.jlelse.eu/how-to-write-android-unit-tests-using-robolectric-27341d530613
 
 
-# Appium Automated Testing for Android:
+# Appium Automated Testing for Android
 
 https://appium.io/downloads
 
@@ -110,7 +110,7 @@ To run Appium Tests:
 - 4. Run Appium Tests
 
 
-# How to set up Environment Variables (ANDROID_HOME and JAVA_HOME) on Windows/Mac:
+# How to set up Environment Variables (ANDROID_HOME and JAVA_HOME) on Windows/Mac
 
 http://www.software-testing-tutorials-automation.com/2015/09/set-androidhome-and-path-environment.html
 
@@ -121,7 +121,7 @@ https://stackoverflow.com/questions/19986214/setting-android-home-enviromental-v
 https://www.mkyong.com/java/how-to-set-java_home-environment-variable-on-mac-os-x/
 
 
-# CircleCI Continuous Integration for Android:
+# CircleCI Continuous Integration for Android
 
 https://github.com/marketplace/category/mobile-ci
 
@@ -130,7 +130,7 @@ https://circleci.com/docs/2.0/
 https://circleci.com/docs/2.0/writing-yaml/
 
  
-# Superpowered Audio Library:
+# Superpowered Audio Library
 
 https://superpowered.com/docs/index.html
 
