@@ -10,6 +10,7 @@ import android.os.Build
 import android.support.annotation.NonNull
 import android.support.annotation.RequiresApi
 import android.support.v4.content.ContextCompat
+import android.util.Log
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
@@ -31,6 +32,8 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
     lateinit var buttonPlus: Button
     lateinit var buttonMinusA: Button
     lateinit var buttonPlusA: Button
+    lateinit var buttonMinusF: Button
+    lateinit var buttonPlusF: Button
     lateinit var tv1: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +46,8 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
 
         val SeekA: SeekBar = findViewById(R.id.seekA)
         val SeekP: SeekBar = findViewById(R.id.seekP)
+        val SeekF: SeekBar = findViewById(R.id.seekF)
+
         tv1 = findViewById(R.id.tv1) as TextView
         button1 = findViewById(R.id.btnStart) as Button
         button2 = findViewById(R.id.btnStop) as Button
@@ -53,6 +58,10 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
 
         buttonMinusA = findViewById(R.id.btnMinusA) as Button
         buttonPlusA = findViewById(R.id.btnPlusA) as Button
+
+        buttonMinusF = findViewById(R.id.btnMinusF) as Button
+        buttonPlusF = findViewById(R.id.btnPlusF) as Button
+
 
         button4 = findViewById(R.id.btnStart2) as Button
         button5 = findViewById(R.id.btnStop2) as Button
@@ -84,9 +93,9 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
             tv1.setText("Playing")
         }
         button4.setOnClickListener {
-            playSound = PlaySound()
+            playSound = PlaySound(500)
             playSound.play()
-            playSound2 = PlaySound()
+            playSound2 = PlaySound(500)
             playSound2.play()
             button4.setEnabled(false)
             button5.setEnabled(true)
@@ -143,6 +152,26 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
                 val textView: TextView = findViewById(R.id.PNum)
                 textView.text = SeekP.progress.toString()
                 playSound.phaseShift(SeekP.progress)
+            }
+        })
+
+        SeekF.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+                // TODO Auto-generated method stub
+            }
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                val textView: TextView = findViewById(R.id.FNum)
+                textView.text = SeekF.progress.toString()
+//                playSound.changeFrequency(SeekF.progress)
+//                playSound2.changeFrequency(SeekF.progress)
+                playSound.stop()
+                playSound2.stop()
+                playSound = PlaySound(SeekF.progress)
+                playSound.play()
+                playSound2 = PlaySound(SeekF.progress)
+                playSound2.play()
             }
         })
     }
