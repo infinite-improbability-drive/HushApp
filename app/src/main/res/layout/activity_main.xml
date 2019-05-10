@@ -201,7 +201,7 @@
         android:layout_marginBottom="156dp"
         android:max="533"
         android:min="12"
-        android:progress="500"
+        android:progress="400"
         app:layout_constraintBottom_toTopOf="@+id/labelP"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.488"
