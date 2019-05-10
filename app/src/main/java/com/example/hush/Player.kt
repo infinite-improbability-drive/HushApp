@@ -15,14 +15,14 @@ class Player {
 
     private fun setupFileForPlayback(file: File) {
         try {
-        player.setDataSource(file.absolutePath)
+            player.setDataSource(file.absolutePath)
         } catch (e: IOException) {
         }
     }
 
     private fun prepareForPlayback() {
         try {
-        player.prepare()
+            player.prepare()
         } catch (e: IOException) {
         }
     }

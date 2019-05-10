@@ -25,7 +25,7 @@ public class PlaySound {
             generatedSnd.length,
             AudioTrack.MODE_STATIC);
     Handler handler = new Handler();
-
+  
     public PlaySound(int y) {
         freqOfTone = y;
 
