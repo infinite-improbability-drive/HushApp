@@ -10,7 +10,6 @@ import android.os.Handler;
 import android.util.Log;
 
 public class PlaySound {
-
     private final int duration = 3; // seconds
     private final int sampleRate = 144000;
     private final int numSamples = duration * sampleRate;
@@ -42,9 +41,10 @@ public class PlaySound {
 
     public void play() {
         Log.d("play/thread " + thread.getId() + " state", thread.getState().toString());
-        thread.start();
+        thread.run();
         Log.d("play/thread " + thread.getId() + " state", thread.getState().toString());
         Log.d("play/bufferSizeInFrames", Integer.toString(audioTrack.getBufferSizeInFrames()));
+        Log.d("play/nativeOutputSampleRate", Integer.toString(audioTrack.getNativeOutputSampleRate(AudioManager.STREAM_MUSIC)));
     }
 
     public void stop() {
@@ -52,6 +52,7 @@ public class PlaySound {
         Log.d("stop/thread " + thread.getId() + " state", thread.getState().toString());
         thread.interrupt();
         Log.d("stop/thread " + thread.getId() + " state", thread.getState().toString());
+        Log.i("frequency", Double.toString(this.freqOfTone));
     }
 
     void genTone(){
@@ -63,6 +64,10 @@ public class PlaySound {
         // assumes the sample buffer is normalised.
         int idx = 0;
         for (final double dVal : sample) {
+
+            if (idx == generatedSnd.length - 3) {
+                Log.d("hi how are you", "i am fine thanks");
+            }
             // scale to maximum amplitude
             final short val = (short) ((dVal * 32767));
             // in 16 bit wav PCM, first byte is the low order byte
@@ -87,6 +92,24 @@ public class PlaySound {
     public void changeVolume(int position) {
         float z = (float) position / 100;
         audioTrack.setVolume(z);
+    }
+
+    public void changeFrequency(int frequency) {
+        this.freqOfTone = frequency;
+        this.sampleRate = frequency * 360;
+        this.numSamples = this.duration * this.sampleRate;
+        this.sample = new double[this.numSamples];
+        this.generatedSnd = new byte[2 * this.numSamples];
+
+        stop();
+        this.audioTrack = new AudioTrack(
+                AudioManager.STREAM_MUSIC,
+                this.sampleRate,
+                AudioFormat.CHANNEL_OUT_MONO,
+                AudioFormat.ENCODING_PCM_16BIT,
+                this.generatedSnd.length,
+                AudioTrack.MODE_STATIC);
+        play();
     }
 
     void playSound(){
