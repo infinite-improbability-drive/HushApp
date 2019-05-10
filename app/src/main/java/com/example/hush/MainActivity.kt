@@ -97,9 +97,9 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
             tv1.setText("Playing")
         }
         button4.setOnClickListener {
-            playSound = PlaySound(500)
+            playSound = PlaySound(400)
             playSound.play()
-            playSound2 = PlaySound(500)
+            playSound2 = PlaySound(400)
             playSound2.play()
             button4.setEnabled(false)
             button5.setEnabled(true)
@@ -127,26 +127,36 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
             val textView: TextView = findViewById(R.id.ANum)
             textView.text = SeekA.progress.toString()
             playSound.changeVolume(SeekA.progress)
+            playSound2.changeVolume(SeekA.progress)
         }
         buttonPlusA.setOnClickListener {
             SeekA.progress = seekA.progress + 1
             val textView: TextView = findViewById(R.id.ANum)
             textView.text = SeekA.progress.toString()
             playSound.changeVolume(SeekA.progress)
+            playSound2.changeVolume(SeekA.progress)
         }
         buttonMinusF.setOnClickListener {
             SeekF.progress = seekF.progress - 1
             val textView: TextView = findViewById(R.id.FNum)
             textView.text = SeekF.progress.toString()
-            playSound.changeFrequency(SeekF.progress)
-            playSound2.changeFrequency(SeekF.progress)
+            playSound.stop()
+            playSound2.stop()
+            playSound = PlaySound(SeekF.progress)
+            playSound.play()
+            playSound2 = PlaySound(SeekF.progress)
+            playSound2.play()
         }
         buttonPlusF.setOnClickListener {
             SeekF.progress = seekF.progress + 1
             val textView: TextView = findViewById(R.id.FNum)
             textView.text = SeekF.progress.toString()
-            playSound.changeFrequency(SeekF.progress)
-            playSound2.changeFrequency(SeekF.progress)
+            playSound.stop()
+            playSound2.stop()
+            playSound = PlaySound(SeekF.progress)
+            playSound.play()
+            playSound2 = PlaySound(SeekF.progress)
+            playSound2.play()
         }
 
         SeekA.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -154,6 +164,7 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
                 val textView: TextView = findViewById(R.id.ANum)
                 textView.text = SeekA.progress.toString()
                 playSound.changeVolume(progress)
+                playSound2.changeVolume(progress)
             }
             override fun onStartTrackingTouch(seekBar: SeekBar) {
                 // TODO Auto-generated method stub

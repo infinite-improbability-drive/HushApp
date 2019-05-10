@@ -3,84 +3,43 @@
 
 package com.example.hush;
 
-import android.app.Activity;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
-import android.media.MediaRecorder;
-import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class PlaySound {
-
-
-
     private int duration = 3; // seconds
-    private int sampleRate;
-    private int numSamples;
-    private double[] sample;
+    private int sampleRate = 144000;
+    private int numSamples = duration * sampleRate;
+    private double[] sample = new double[numSamples];
     private double freqOfTone; // hz
-    //private final double periodInSeconds = 1 / freqOfTone;
     private double periodInSamples = sampleRate / freqOfTone;
-    //private final double numPeriods = numSamples / periodInSamples;
-    private byte[] generatedSnd;
-    private AudioTrack audioTrack;
+    private byte[] generatedSnd = new byte[2 * numSamples];
+    final AudioTrack audioTrack = new AudioTrack(
+            AudioManager.STREAM_MUSIC,
+            sampleRate,
+            AudioFormat.CHANNEL_OUT_MONO,
+            AudioFormat.ENCODING_PCM_16BIT,
+            generatedSnd.length,
+            AudioTrack.MODE_STATIC);
+    Handler handler = new Handler();
 
     public PlaySound(int y) {
         freqOfTone = y;
-        sampleRate = (int)freqOfTone * 360;
-        numSamples = duration * sampleRate;
-        sample = new double[numSamples];
-        generatedSnd = new byte[2 * numSamples];
-        audioTrack = new AudioTrack(
-                AudioManager.STREAM_MUSIC,
-                sampleRate,
-                AudioFormat.CHANNEL_OUT_MONO,
-                AudioFormat.ENCODING_PCM_16BIT,
-                generatedSnd.length,
-                AudioTrack.MODE_STATIC);
+
     }
 
-    Handler handler;
 
 
-    Thread thread;
-//    = new Thread(new Runnable() {
-//
-//        public void run() {
-//            genTone();
-//            handler.post(new Runnable() {
-//
-//                public void run() {
-//                    playSound();
-//                }
-//            });
-//        }
-//    });
-
+   Thread thread;
 
     public void play() {
-      //   Use a new tread as this can take a while
         thread = new Thread(new Runnable() {
+
             public void run() {
                 genTone();
-                handler = new Handler();
                 handler.post(new Runnable() {
 
                     public void run() {
@@ -105,7 +64,6 @@ public class PlaySound {
     }
 
     void genTone(){
-        // fill out the array
         for (int i = 0; i < numSamples; ++i) {
             sample[i] = Math.sin(2 * Math.PI * i / (sampleRate/freqOfTone));
         }
@@ -123,7 +81,6 @@ public class PlaySound {
             // in 16 bit wav PCM, first byte is the low order byte
             generatedSnd[idx++] = (byte) (val & 0x00ff);
             generatedSnd[idx++] = (byte) ((val & 0xff00) >>> 8);
-
         }
     }
 
@@ -143,25 +100,6 @@ public class PlaySound {
     public void changeVolume(int position) {
         float z = (float) position / 100;
         audioTrack.setVolume(z);
-
-    }
-
-    public void changeFrequency(int frequency) {
-        this.freqOfTone = frequency;
-        this.sampleRate = frequency * 360;
-        this.numSamples = this.duration * this.sampleRate;
-        this.sample = new double[this.numSamples];
-        this.generatedSnd = new byte[2 * this.numSamples];
-
-        stop();
-        this.audioTrack = new AudioTrack(
-                AudioManager.STREAM_MUSIC,
-                this.sampleRate,
-                AudioFormat.CHANNEL_OUT_MONO,
-                AudioFormat.ENCODING_PCM_16BIT,
-                this.generatedSnd.length,
-                AudioTrack.MODE_STATIC);
-        play();
     }
 
     void playSound(){
@@ -171,25 +109,6 @@ public class PlaySound {
 
         audioTrack.write(generatedSnd, 0, generatedSnd.length);
         audioTrack.setLoopPoints(0, generatedSnd.length / 2, -1);
-        // audioTrack.setLoopPoints((int) ((period) * ((float) position / 360)), sample.length - ((int) period * (position / 360)), -1);
         audioTrack.play();
     }
-
-
-    // see if time delay works. To run the method myTask every 5 second
-    public void timeDelay() {
-        final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-        executorService.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                myTask();        // need to implement thread here so that one thread gets delayed.
-            }
-        }, 0, 5, TimeUnit.SECONDS);
-    }
-
-     void myTask() {
-        System.out.println("Running");
-    }
-
-
 }
