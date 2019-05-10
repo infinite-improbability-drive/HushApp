@@ -12,6 +12,9 @@ import org.robolectric.shadows.ShadowToast
 import android.app.Activity
 import android.os.Bundle
 import android.content.Intent
+import android.widget.LinearLayout
+import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_main.*
 import org.junit.Assert.*
 import org.robolectric.Shadows
 import org.robolectric.shadows.ShadowApplication
@@ -39,6 +42,13 @@ class MainActivityTest {
         controller.start()
 
         application = Shadows.shadowOf(activity.application)
+
+        /// //
+        //activity = Robolectric.buildActivity(RobolectricActivity.class)
+                //.create()
+                //.resume()
+                //.get()
+
     }
 
     @Test
@@ -159,4 +169,12 @@ class MainActivityTest {
         assertNotNull(activity)
         activity.setContentView(R.layout.content_main)
     }
+
+    @Test
+    @Throws(Exception::class)
+    fun testOnCompletion(){
+        testMainActivity.button1 = Button(activity)
+        assertNotNull(testMainActivity.button1)
+    }
 }
+
