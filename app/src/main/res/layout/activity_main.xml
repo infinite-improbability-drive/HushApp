@@ -7,51 +7,332 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <android.support.constraint.ConstraintLayout
+    <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="294dp"
+        android:layout_marginBottom="312dp"
         android:theme="@style/AppTheme.AppBarOverlay"
         app:layout_constraintBottom_toTopOf="@+id/btnStart"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="429dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="?attr/colorPrimary"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:title="@string/app_name" />
 
-    </android.support.constraint.ConstraintLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/content_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="341dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnStop"
+        app:layout_constraintStart_toStartOf="@+id/appBarLayout"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+        app:layout_constraintVertical_bias="0.502" />
 
     <Button
         android:id="@+id/btnStart"
-        android:layout_width="128dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="295dp"
-        android:text="Start"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="106dp"
+        android:layout_height="69dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="464dp"
+        android:background="@color/colorAccent2"
+        android:text="Record"
+        android:textColor="@color/colorAccent3"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        app:layout_constraintVertical_bias="0.499" />
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnMinus"
+        android:layout_width="38dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="36dp"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:background="@color/colorAccent2"
+        android:text="-"
+        android:textColor="@color/colorAccent3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnPlus"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="36dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="368dp"
+        android:layout_marginBottom="32dp"
+        android:background="@color/colorAccent2"
+        android:text="+"
+        android:textColor="@color/colorAccent3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnMinusA"
+        android:layout_width="38dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="140dp"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:background="@color/colorAccent2"
+        android:text="-"
+        android:textColor="@color/colorAccent3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnPlusA"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="36dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="368dp"
+        android:layout_marginBottom="136dp"
+        android:text="+"
+        android:background="@color/colorAccent2"
+        android:textColor="@color/colorAccent3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnMinusF"
+        android:layout_width="38dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="252dp"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:background="@color/colorAccent2"
+        android:text="-"
+        android:textColor="@color/colorAccent3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnPlusF"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="36dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="368dp"
+        android:layout_marginBottom="248dp"
+        android:background="@color/colorAccent2"
+        android:text="+"
+        android:textColor="@color/colorAccent3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnStop"
-        android:layout_width="131dp"
-        android:layout_height="85dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginBottom="8dp"
-        android:text="Stop"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="116dp"
+        android:layout_height="76dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="460dp"
+        android:text="Stop Recording"
+        android:textColor="@color/colorAccent3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnStart" />
+
+    <Button
+        android:id="@+id/btnPlay"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="103dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="464dp"
+        android:background="@color/colorAccent2"
+        android:text="Play Recording"
+        android:textColor="@color/colorAccent3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+        app:layout_constraintHorizontal_bias="0.972"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnStart2"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="130dp"
+        android:layout_height="69dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="340dp"
+        android:background="@color/colorAccent2"
+        android:text="Play Frequency"
+        android:textColor="@color/colorAccent3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnStop2"
+        app:layout_constraintHorizontal_bias="0.222"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnStop2"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="141dp"
+        android:layout_height="82dp"
+        android:layout_marginStart="228dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="328dp"
+        android:text="Stop Frequency"
+        android:textColor="@color/colorAccent3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.205"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.99" />
+
+    <SeekBar
+        android:id="@+id/seekF"
+        android:layout_width="309dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="156dp"
+        android:max="533"
+        android:min="12"
+        android:progress="400"
+        app:layout_constraintBottom_toTopOf="@+id/labelP"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <SeekBar
+        android:id="@+id/seekA"
+        android:layout_width="309dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="44dp"
+        android:max="100"
+        android:progress="100"
+        app:layout_constraintBottom_toTopOf="@+id/labelP"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <SeekBar
+        android:id="@+id/seekP"
+        android:layout_width="306dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="40dp"
+        android:max="360"
+        android:progress="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/labelA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Amplitude:"
+        android:textColor="@color/colorAccent3"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        app:layout_constraintBottom_toTopOf="@+id/seekA"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/labelF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="112dp"
+        android:text="Frequency:"
+        android:textColor="@color/colorAccent3"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        app:layout_constraintBottom_toTopOf="@+id/seekA"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <TextView
+        android:id="@+id/labelP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="156dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
+        android:text="Shift Phase:"
+        android:textColor="@color/colorAccent3"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        app:layout_constraintBottom_toTopOf="@+id/seekP"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="59dp"
+        android:layout_height="25dp"
+        android:text="status"
+        android:visibility="invisible"
+        android:textColor="@color/colorAccent3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.254" />
+
+    <TextView
+        android:id="@+id/PNum"
+        android:layout_width="66dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="148dp"
+        android:layout_marginBottom="8dp"
+        android:text="0"
+        android:textColor="@color/colorAccent3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekP"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/ANum"
+        android:layout_width="66dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="156dp"
+        android:layout_marginBottom="136dp"
+        android:text="100"
+        android:textColor="@color/colorAccent3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekA"
+        app:layout_constraintVertical_bias="0.228" />
+
+    <TextView
+        android:id="@+id/FNum"
+        android:layout_width="66dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="192dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="244dp"
+        android:text="400"
+        android:textColor="@color/colorAccent3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekF"
+        app:layout_constraintVertical_bias="0.258" />
 
     <!--<android.support.design.widget.FloatingActionButton-->
     <!--android:id="@+id/fab"-->
