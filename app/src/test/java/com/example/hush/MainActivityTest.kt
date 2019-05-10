@@ -12,6 +12,7 @@ import org.robolectric.shadows.ShadowToast
 import android.app.Activity
 import android.os.Bundle
 import android.content.Intent
+import android.media.MediaPlayer
 import android.widget.LinearLayout
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -42,13 +43,6 @@ class MainActivityTest {
         controller.start()
 
         application = Shadows.shadowOf(activity.application)
-
-        /// //
-        //activity = Robolectric.buildActivity(RobolectricActivity.class)
-                //.create()
-                //.resume()
-                //.get()
-
     }
 
     @Test
@@ -182,8 +176,10 @@ class MainActivityTest {
         testMainActivity.button3 = Button(activity)
         assertNotNull(testMainActivity.button3)
 
-        testMainActivity.button4 = Button(activity)
-        assertNotNull(testMainActivity.button4)
+        testMainActivity.tv1 = TextView(activity)
+        var mediaPlayer = MediaPlayer()
+        testMainActivity.onCompletion(mediaPlayer)
+
     }
 }
 
