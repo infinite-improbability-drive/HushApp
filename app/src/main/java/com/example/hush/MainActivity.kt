@@ -93,9 +93,9 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
             tv1.setText("Playing")
         }
         button4.setOnClickListener {
-            playSound = PlaySound(500)
+            playSound = PlaySound()
             playSound.play()
-            playSound2 = PlaySound(500)
+            playSound2 = PlaySound()
             playSound2.play()
             button4.setEnabled(false)
             button5.setEnabled(true)
@@ -168,9 +168,9 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
 //                playSound2.changeFrequency(SeekF.progress)
                 playSound.stop()
                 playSound2.stop()
-                playSound = PlaySound(SeekF.progress)
+                playSound = PlaySound()
                 playSound.play()
-                playSound2 = PlaySound(SeekF.progress)
+                playSound2 = PlaySound()
                 playSound2.play()
             }
         })
