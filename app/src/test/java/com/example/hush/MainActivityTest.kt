@@ -53,11 +53,31 @@ class MainActivityTest {
         testMainActivity.player = Player()
         testMainActivity.playSound = PlaySound()
         testMainActivity.playSound2 = PlaySound()
+        testMainActivity.button1 = Button(activity)
+        testMainActivity.button2 = Button(activity)
+        testMainActivity.button3 = Button(activity)
+        testMainActivity.button4 = Button(activity)
+        testMainActivity.button5 = Button(activity)
+        testMainActivity.buttonMinus = Button(activity)
+        testMainActivity.buttonPlus = Button(activity)
+        testMainActivity.buttonMinusA = Button(activity)
+        testMainActivity.buttonPlusA = Button(activity)
+        testMainActivity.tv1 = TextView(activity)
 
         assertNotNull(testMainActivity.recorder)
         assertNotNull(testMainActivity.player)
         assertNotNull(testMainActivity.playSound)
         assertNotNull(testMainActivity.playSound2)
+        assertNotNull(testMainActivity.button1)
+        assertNotNull(testMainActivity.button2)
+        assertNotNull(testMainActivity.button3)
+        assertNotNull(testMainActivity.button4)
+        assertNotNull(testMainActivity.button5)
+        assertNotNull(testMainActivity.buttonMinus)
+        assertNotNull(testMainActivity.buttonPlus)
+        assertNotNull(testMainActivity.buttonMinusA)
+        assertNotNull(testMainActivity.buttonPlusA)
+        assertNotNull(testMainActivity.tv1)
     }
 
     @Test
@@ -168,17 +188,17 @@ class MainActivityTest {
     @Throws(Exception::class)
     fun testOnCompletion(){
         testMainActivity.button1 = Button(activity)
-        assertNotNull(testMainActivity.button1)
-
         testMainActivity.button2 = Button(activity)
-        assertNotNull(testMainActivity.button2)
-
         testMainActivity.button3 = Button(activity)
-        assertNotNull(testMainActivity.button3)
-
         testMainActivity.tv1 = TextView(activity)
         var mediaPlayer = MediaPlayer()
+
         testMainActivity.onCompletion(mediaPlayer)
+
+        assertTrue(testMainActivity.button1.isEnabled)
+        assertTrue(testMainActivity.button2.isEnabled)
+        assertTrue(testMainActivity.button3.isEnabled)
+        assertEquals("Ready", testMainActivity.tv1.text)
 
     }
 }
