@@ -12,6 +12,10 @@ import org.robolectric.shadows.ShadowToast
 import android.app.Activity
 import android.os.Bundle
 import android.content.Intent
+import android.media.MediaPlayer
+import android.widget.LinearLayout
+import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_main.*
 import org.junit.Assert.*
 import org.robolectric.Shadows
 import org.robolectric.shadows.ShadowApplication
@@ -49,11 +53,31 @@ class MainActivityTest {
         testMainActivity.player = Player()
         testMainActivity.playSound = PlaySound()
         testMainActivity.playSound2 = PlaySound()
+        testMainActivity.button1 = Button(activity)
+        testMainActivity.button2 = Button(activity)
+        testMainActivity.button3 = Button(activity)
+        testMainActivity.button4 = Button(activity)
+        testMainActivity.button5 = Button(activity)
+        testMainActivity.buttonMinus = Button(activity)
+        testMainActivity.buttonPlus = Button(activity)
+        testMainActivity.buttonMinusA = Button(activity)
+        testMainActivity.buttonPlusA = Button(activity)
+        testMainActivity.tv1 = TextView(activity)
 
         assertNotNull(testMainActivity.recorder)
         assertNotNull(testMainActivity.player)
         assertNotNull(testMainActivity.playSound)
         assertNotNull(testMainActivity.playSound2)
+        assertNotNull(testMainActivity.button1)
+        assertNotNull(testMainActivity.button2)
+        assertNotNull(testMainActivity.button3)
+        assertNotNull(testMainActivity.button4)
+        assertNotNull(testMainActivity.button5)
+        assertNotNull(testMainActivity.buttonMinus)
+        assertNotNull(testMainActivity.buttonPlus)
+        assertNotNull(testMainActivity.buttonMinusA)
+        assertNotNull(testMainActivity.buttonPlusA)
+        assertNotNull(testMainActivity.tv1)
     }
 
     @Test
@@ -159,4 +183,23 @@ class MainActivityTest {
         assertNotNull(activity)
         activity.setContentView(R.layout.content_main)
     }
+
+    @Test
+    @Throws(Exception::class)
+    fun testOnCompletion(){
+        testMainActivity.button1 = Button(activity)
+        testMainActivity.button2 = Button(activity)
+        testMainActivity.button3 = Button(activity)
+        testMainActivity.tv1 = TextView(activity)
+        var mediaPlayer = MediaPlayer()
+
+        testMainActivity.onCompletion(mediaPlayer)
+
+        assertTrue(testMainActivity.button1.isEnabled)
+        assertTrue(testMainActivity.button2.isEnabled)
+        assertTrue(testMainActivity.button3.isEnabled)
+        assertEquals("Ready", testMainActivity.tv1.text)
+
+    }
 }
+
