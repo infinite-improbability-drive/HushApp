@@ -94,24 +94,6 @@ public class PlaySound {
         audioTrack.setVolume(z);
     }
 
-    public void changeFrequency(int frequency) {
-        this.freqOfTone = frequency;
-        this.sampleRate = frequency * 360;
-        this.numSamples = this.duration * this.sampleRate;
-        this.sample = new double[this.numSamples];
-        this.generatedSnd = new byte[2 * this.numSamples];
-
-        stop();
-        this.audioTrack = new AudioTrack(
-                AudioManager.STREAM_MUSIC,
-                this.sampleRate,
-                AudioFormat.CHANNEL_OUT_MONO,
-                AudioFormat.ENCODING_PCM_16BIT,
-                this.generatedSnd.length,
-                AudioTrack.MODE_STATIC);
-        play();
-    }
-
     void playSound(){
         Log.d("playSound/thread " + thread.getId() + " state", thread.getState().toString());
         Log.d("playSound/starting frame", Integer.toString(0));
