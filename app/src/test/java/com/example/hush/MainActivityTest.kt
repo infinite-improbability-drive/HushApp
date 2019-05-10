@@ -175,6 +175,15 @@ class MainActivityTest {
     fun testOnCompletion(){
         testMainActivity.button1 = Button(activity)
         assertNotNull(testMainActivity.button1)
+
+        testMainActivity.button2 = Button(activity)
+        assertNotNull(testMainActivity.button2)
+
+        testMainActivity.button3 = Button(activity)
+        assertNotNull(testMainActivity.button3)
+
+        testMainActivity.button4 = Button(activity)
+        assertNotNull(testMainActivity.button4)
     }
 }
 
