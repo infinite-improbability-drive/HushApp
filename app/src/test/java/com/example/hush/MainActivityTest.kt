@@ -51,8 +51,8 @@ class MainActivityTest {
 
         testMainActivity.recorder = Recorder()
         testMainActivity.player = Player()
-        testMainActivity.playSound = PlaySound()
-        testMainActivity.playSound2 = PlaySound()
+        testMainActivity.playSound = PlaySound(400)
+        testMainActivity.playSound2 = PlaySound(400)
         testMainActivity.button1 = Button(activity)
         testMainActivity.button2 = Button(activity)
         testMainActivity.button3 = Button(activity)

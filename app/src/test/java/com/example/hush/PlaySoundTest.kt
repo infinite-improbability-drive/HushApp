@@ -34,8 +34,8 @@ class PlaySoundTest {
 
         controller.start()
 
-        testMainActivity.playSound = PlaySound()
-        testPlaySound = PlaySound()
+        testMainActivity.playSound = PlaySound(400)
+        testPlaySound = PlaySound(400)
     }
 
     @Test

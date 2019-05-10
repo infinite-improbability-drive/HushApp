@@ -194,9 +194,9 @@ class MainActivity : AppCompatActivity(), MediaPlayer.OnCompletionListener {
 //                playSound2.changeFrequency(SeekF.progress)
                 playSound.stop()
                 playSound2.stop()
-                playSound = PlaySound()
+                playSound = PlaySound(SeekF.progress)
                 playSound.play()
-                playSound2 = PlaySound()
+                playSound2 = PlaySound(SeekF.progress)
                 playSound2.play()
             }
         })
