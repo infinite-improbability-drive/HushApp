@@ -10,13 +10,13 @@ import android.os.Handler;
 import android.util.Log;
 
 public class PlaySound {
-    private final int duration = 3; // seconds
-    private final int sampleRate = 144000;
-    private final int numSamples = duration * sampleRate;
-    private final double[] sample = new double[numSamples];
-    private final double freqOfTone = 400; // hz
-    private final double periodInSamples = sampleRate / freqOfTone;
-    private final byte[] generatedSnd = new byte[2 * numSamples];
+    private int duration = 3; // seconds
+    private int sampleRate = 144000;
+    private int numSamples = duration * sampleRate;
+    private double[] sample = new double[numSamples];
+    private double freqOfTone; // hz
+    private double periodInSamples = sampleRate / freqOfTone;
+    private byte[] generatedSnd = new byte[2 * numSamples];
     final AudioTrack audioTrack = new AudioTrack(
             AudioManager.STREAM_MUSIC,
             sampleRate,
@@ -25,21 +25,29 @@ public class PlaySound {
             generatedSnd.length,
             AudioTrack.MODE_STATIC);
     Handler handler = new Handler();
+  
+    public PlaySound(int y) {
+        freqOfTone = y;
 
-    final Thread thread = new Thread(new Runnable() {
+    }
 
-        public void run() {
-            genTone();
-            handler.post(new Runnable() {
 
-                public void run() {
-                    playSound();
-                }
-            });
-        }
-    });
+
+   Thread thread;
 
     public void play() {
+        thread = new Thread(new Runnable() {
+
+            public void run() {
+                genTone();
+                handler.post(new Runnable() {
+
+                    public void run() {
+                        playSound();
+                    }
+                });
+            }
+        });
         Log.d("play/thread " + thread.getId() + " state", thread.getState().toString());
         thread.run();
         Log.d("play/thread " + thread.getId() + " state", thread.getState().toString());
